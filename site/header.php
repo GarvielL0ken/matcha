@@ -1,9 +1,14 @@
 <?php
     require_once "../config/funcs.php";
 
-    /*session_start();
-    if (!$_SESSION['user'] && ($page != "login" && $page != "registration"))
-        redirect_to_page('login.php');*/
+    session_start();
+    if ($page != 'Login' && $page != 'Registration' && $page != 'Reset Password')
+    {
+        if (!isset($_SESSION['user']))
+            redirect_to_page('login.php');
+        if (!$_SESSION['user'])
+            redirect_to_page('login.php');
+    }
 ?>
 <html>
     <head>
