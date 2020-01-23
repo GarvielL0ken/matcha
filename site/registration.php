@@ -1,6 +1,7 @@
 <?php
     $page = "Registration";
     require_once "header.php";
+    session_start();
 ?>
 <html>
     <form action= '../config/new_user.php' method= "post">
@@ -11,5 +12,6 @@
         <pre>Password:         <input required type= "password" name= "passwd"></pre>
         <pre>Confirm password: <input required type= "password" name= "confirm_passwd"></pre>
         <input type= "submit" name= "submit" value= "Submit">
+        <?php print_error_msg()?>
     </form>
 </html>

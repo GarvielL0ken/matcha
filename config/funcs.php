@@ -1,9 +1,4 @@
 <?php
-    function redirect_to_page($page)
-    {
-        header('Location: ' . $page);
-    }
-
     function output_a($href, $string, $type= null)
     {
         $html = '<a href= "' . $href . '">';
@@ -13,5 +8,38 @@
             $html .=  '<img src= "../resources/' . $string . '.png" alt= "' . $string . '" width= "50" height= "50">';
         $html .= '</a>';
         return ($html);
+    }
+
+    function print_error_msg()
+	{
+		if ($_SESSION['error_msg'])
+		{
+			print('<pre>' . $_SESSION['error_msg'] . '</pre>');
+			$_SESSION['error_msg'] = null;
+		}
+    }
+
+    function redirect_to_page($page, $error_msg= null, $user_data= null, $null_keys= null)
+    {
+        //print($error_msg);
+        $_SESSION['error_msg'] = $error_msg;
+        //print_r($_SESSION);
+        /*if ($user_data)
+            $user_data = set_keys($user_data, $null_keys);*/
+        header('Location: ' . $page);
+        die();
+    }
+
+    function set_keys($user_data, $null_keys)
+    {
+        $arr_keys = array('first_name', 'last_name', 'username', 'email');
+        foreach ($arr_keys as $key)
+        {
+            if (!isset($user_data[$key]))
+                $user_data[$key] = null;
+        }
+        foreach ($null_keys as $null_key)
+            $user_data[$null_key] = null;
+        return ($user_data);
     }
 ?>
