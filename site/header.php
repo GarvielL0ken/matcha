@@ -1,14 +1,15 @@
 <?php
+    require_once "../config/user.class.php";
+    require_once "../config/user_funcs.php";
     require_once "../config/funcs.php";
-
     session_start();
-    if ($page != 'Login' && $page != 'Registration' && $page != 'Reset Password')
+    /*if ($page != 'Login' && $page != 'Registration' && $page != 'Reset Password')
     {
         if (!isset($_SESSION['user']))
             redirect_to_page('login.php');
         if (!$_SESSION['user'])
             redirect_to_page('login.php');
-    }
+    }*/
 ?>
 <html>
     <head>
@@ -33,7 +34,7 @@
                 if ($p['Registration'] || $p['Reset Password'])
                     print (output_a('login.php', 'Login'));
                 if ($p['Login'] || $p['Profile'])
-                    print(output_a('reset_password.php', 'Reset Password'));
+                    print(output_a('reset_password.php?action=send_link', 'Reset Password'));
             ?>
         </body>
 </html>

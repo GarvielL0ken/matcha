@@ -1,4 +1,5 @@
 <?php
+
     function output_a($href, $string, $type= null)
     {
         $html = '<a href= "' . $href . '">';
