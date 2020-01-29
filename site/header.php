@@ -2,6 +2,9 @@
     require_once "../config/user.class.php";
     require_once "../config/user_funcs.php";
     require_once "../config/funcs.php";
+    require_once "../config/setup.php";
+    require_once "../config/db_funcs.php";
+    
     session_start();
     /*if ($page != 'Login' && $page != 'Registration' && $page != 'Reset Password')
     {

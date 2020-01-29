@@ -30,4 +30,6 @@
         redirect_to_page($location, 'Passwords do not match', $user_data);
     if (!validate_password($passwd))
         redirect_to_page($location, 'Invalid Password', $user_data);
+    if (!is_in_db('users', 'username', $username))
+        redirect_to_page($location, 'Username already in use', $user_data);
 ?>
