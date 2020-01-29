@@ -1,6 +1,5 @@
 <?php
-    print("hello");
-    /*require_once 'funcs.php';
+    require_once 'funcs.php';
     session_start();
 
     function is_set($key)
@@ -19,9 +18,9 @@
 	$passwd         = $_POST['passwd'];
 	$confirm_passwd = $_POST['confirm_passwd'];
 	$user_data = array('first_name' => $first_name, 'last_name' => $last_name, 'username' => $username, 'email' => $email);
-    $location = '../site/registration.php';*/
+    $location = '../site/registration.php';
     
-    /*if (!ctype_alpha($first_name))
+    if (!ctype_alpha($first_name))
         redirect_to_page($location, 'Names must only be alphabetical characters', $user_data, array('first_name'));
     if (!ctype_alpha($last_name))
         redirect_to_page($location, 'Names must only be alphabetical characters', $user_data, array('last_name'));
@@ -30,10 +29,10 @@
     if ($passwd != $confirm_passwd)
         redirect_to_page($location, 'Passwords do not match', $user_data);
     if (!validate_password($passwd))
-        redirect_to_page($location, 'Invalid Password', $user_data);*/
-    //if (!is_in_db('users', 'username', $username))
-        //redirect_to_page($location, 'Username already in use', $user_data);
-    //$user_data['passwd'] = hash( 'whirlpool', $passwd);
-    //insert_new_record('users', $user_data);
-    //redirect_to_page('../site/login.php', 'An email has been sent to your email address to verify your account');
+        redirect_to_page($location, 'Invalid Password', $user_data);
+    if (!is_in_db('users', 'username', $username))
+        redirect_to_page($location, 'Username already in use', $user_data);
+    $user_data['passwd'] = hash( 'whirlpool', $passwd);
+    insert_new_record('users', $user_data);
+    redirect_to_page('../site/login.php', 'An email has been sent to your email address to verify your account');
 ?>
