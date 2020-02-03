@@ -8,14 +8,27 @@
         $stmt->execute($data);
     }
 
-    function is_in_db($table, $column, $value)
+    function get_results($table, $columns, $comparator, $value)
     {
         $conn = connect_to_db();
-        $stmt = $conn->prepare('SELECT ' . $column . ' FROM ' . $table . ' WHERE ' . $column . ' = :value');
+        $stmt = $conn->prepare('SELECT ' . $columns . ' FROM ' . $table . ' WHERE ' . $comparator . ' = :value');
         $stmt->execute(array('value' => $value));
         $results = $stmt->fetchAll();
+        return ($results);
+    }
+
+    function is_in_db($table, $column, $value)
+    {
+        $results = get_results($table, $column, $column, $value);
         if (!$results)
             return (0);
         return (1);
+    }
+
+
+
+    function create_user($username)
+    {
+        
     }
 ?>

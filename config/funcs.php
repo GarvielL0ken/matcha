@@ -11,6 +11,23 @@
         return ($html);
     }
 
+    function output_field($text, $type, $name, $placeholder= null)
+    {
+        $html = '<pre>' . $text . '<input required type= "' . $type . '" name= "' . $name . '"';
+        $mode = 0;
+        if (isset($_SESSION['user_data']))
+        {
+            if (isset($_SESSION['user_data'][$name]))
+                $mode = 1;
+        }
+        if ($mode)
+            $html .= ' value= "' . $_SESSION['user_data'][$name] . '"';
+        else if ($placeholder)
+            $html .= ' placeholder= "' . $placeholder . '"';
+        $html .= '></pre>';
+        return ($html);
+    }
+
     function print_error_msg()
 	{
 		if ($_SESSION['error_msg'])
@@ -22,11 +39,10 @@
 
     function redirect_to_page($page, $error_msg= null, $user_data= null, $null_keys= null)
     {
-        //print($error_msg);
         $_SESSION['error_msg'] = $error_msg;
-        //print_r($_SESSION);
-        /*if ($user_data)
-            $user_data = set_keys($user_data, $null_keys);*/
+        if ($user_data)
+            $user_data = set_keys($user_data, $null_keys);
+        $_SESSION['user_data'] = $user_data;
         header('Location: ' . $page);
         die();
     }

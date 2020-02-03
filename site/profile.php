@@ -1,12 +1,12 @@
 <?php
     $page = "Profile";
     require_once "header.php";
+    require_once '../config/profile.php';
 ?>
 <html>
     <body>
         <div>
             <?php
-                $user = new User(array('username' => 'Joe', 'first_name' => 'Not_Joe', 'last_name' => 'Joeson'));
                 $mode = 0;
                 if (isset($_GET))
                 {

@@ -26,6 +26,8 @@
             {
                 if (isset($data[$key]))
                     $this->{$key} = $data[$key];
+                else
+                    $this->{$key} = null;
             }
         }
     }

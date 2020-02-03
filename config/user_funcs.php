@@ -1,14 +1,28 @@
 <?php
+    require_once 'db_funcs.php';
+    require_once 'globals.php';
+    require_once 'user.class.php';
+
+    function create_user($username)
+    {
+        global $USER_KEYS;
+        foreach ($USER_KEYS as $key)
+            $columns .= $key .',';
+        $columns = substr($columns, 0, -1);
+        $results  = get_results('users', $columns, 'username', $username);
+        foreach ($USER_KEYS as $key)
+            $arr_user_data[$key] = $results[$key];
+        $user = new User($arr_user_data);
+    }
+
     function display_user($user, $mode)
     {
+        global $USER_KEYS;
         if ($mode == 1)
             $html = '<form action= "../config/update_user_data.php" method= "post">';
         else
             $html = '<div>';
-        $arr_keys = array('first_name', 'last_name', 'username', 'gender', 
-                          'sexual_preferences', 'bio', 'tags', 'profile_pictures', 
-                          'age', 'fame_rating');
-        foreach ($arr_keys as $key)
+        foreach ($USER_KEYS as $key)
             $html .= output_user_data($user->{$key}, $key, $mode);
         if ($mode == 1)
             $html .= '</form>';

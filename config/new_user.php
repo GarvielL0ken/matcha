@@ -1,6 +1,11 @@
 <?php
     require_once 'funcs.php';
+    require_once 'database.php';
+    require_once 'setup.php';
+    require_once 'db_funcs.php';
     session_start();
+
+    global $RGX_USERNAME;
 
     function is_set($key)
 	{
@@ -21,18 +26,19 @@
     $location = '../site/registration.php';
     
     if (!ctype_alpha($first_name))
-        redirect_to_page($location, 'Names must only be alphabetical characters', $user_data, array('first_name'));
+        redirect_to_page($location, 'First name must be only alphabetical characters', $user_data, array('first_name'));
     if (!ctype_alpha($last_name))
-        redirect_to_page($location, 'Names must only be alphabetical characters', $user_data, array('last_name'));
+        redirect_to_page($location, 'Last name must be only alphabetical characters', $user_data, array('last_name'));
     if(!preg_match('/' . $RGX_USERNAME . '/', $username))
         redirect_to_page($location, 'Invalid Username', $user_data, array('username'));
     if ($passwd != $confirm_passwd)
         redirect_to_page($location, 'Passwords do not match', $user_data);
-    if (!validate_password($passwd))
-        redirect_to_page($location, 'Invalid Password', $user_data);
-    if (!is_in_db('users', 'username', $username))
+    //if (!validate_password($passwd))
+    //    redirect_to_page($location, 'Invalid Password', $user_data);
+    if (is_in_db('users', 'username', $username))
         redirect_to_page($location, 'Username already in use', $user_data);
-    $user_data['passwd'] = hash( 'whirlpool', $passwd);
+    print('Hello');
+    /*$user_data['passwd'] = hash( 'whirlpool', $passwd);
     insert_new_record('users', $user_data);
-    redirect_to_page('../site/login.php', 'An email has been sent to your email address to verify your account');
+    redirect_to_page('../site/login.php', 'An email has been sent to your email address to verify your account');*/
 ?>
