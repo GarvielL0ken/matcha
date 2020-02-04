@@ -19,13 +19,13 @@
     {
         global $USER_KEYS;
         if ($mode == 1)
-            $html = '<form action= "../config/update_user_data.php" method= "post">';
+            $html = '<form action= "../config/profile.php" method= "post">';
         else
             $html = '<div>';
         foreach ($USER_KEYS as $key)
             $html .= output_user_data($user->{$key}, $key, $mode);
         if ($mode == 1)
-            $html .= '</form>';
+            $html .= '<input type= "submit" name= "save" value= "Save"></form>';
         else
             $html .= '</div>';
         print($html);

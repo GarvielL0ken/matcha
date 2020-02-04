@@ -1,5 +1,7 @@
 <?php
     $page = "Profile";
+    $mode = 0;
+    
     require_once "header.php";
     require_once '../config/profile.php';
 ?>
@@ -7,7 +9,6 @@
     <body>
         <div>
             <?php
-                $mode = 0;
                 if (isset($_GET))
                 {
                     if (isset($_GET['action']))

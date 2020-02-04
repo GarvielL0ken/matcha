@@ -30,5 +30,17 @@
                     $this->{$key} = null;
             }
         }
+
+        function calculate_fame_rating()
+        {
+            if ($this->$nuw_users_viewed_by == 0)
+                $like_to_view_ratio = 1;
+            else 
+                $like_to_view_ratio = $this->num_users_liked_by / $this->num_users_viewed_by;
+            $view_to_users_ratio = $this->num_users_viewed_by / get_num_users();
+            $fame_rating = ($like_to_view_ratio + $view_to_users_ratio) * 100;
+            $this->fame_rating = $fame_rating;
+            return ($this->fame_rating);
+        }
     }
 ?>

@@ -1,4 +1,14 @@
 <?php
+    function key_isset($array, $key)
+    {
+        $set = false;
+        if (isset($array))
+        {
+            if (isset($array[$key]))
+                $set = true;
+        }
+        return ($set);
+    }
 
     function output_a($href, $string, $type= null)
     {

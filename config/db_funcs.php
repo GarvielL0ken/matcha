@@ -8,6 +8,15 @@
         $stmt->execute($data);
     }
 
+    function get_num_users()
+    {
+        $conn = connect_to_db();
+        $stmt = $conn->prepare('SELECT COUNT(`id_user`) FROM users');
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        return($results[0]['id_user'])
+    }
+
     function get_results($table, $columns, $comparator, $value)
     {
         $conn = connect_to_db();
@@ -25,10 +34,15 @@
         return (1);
     }
 
-
-
-    function create_user($username)
+    function update_record($table, $arr_data, $comparator, $value)
     {
-        
+        $conn = connect_to_db();
+        $sql = 'UPDATE ' . $table . ' SET ';
+        foreach (array_keys($data) in $key)
+            $sql .= $key . ' = :' . $arr_data[$key] . ', ';
+        $sql = substr($sql, 0, -2);
+        $sql .= ' WHERE ' . $comparator ' = :' $value;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($arr_data);
     }
 ?>
