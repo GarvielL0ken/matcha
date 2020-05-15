@@ -1,99 +1,109 @@
 Pages:
-    All:
-        able to log out no at any time
-        The user must be able to see from any page if a new message is received
-        A user must be able to see, from any page that a notification hasn’t been read.
+	All:
+		able to log out no at any time
+		The user must be able to see from any page if a new message is received
+		A user must be able to see, from any page that a notification hasn’t been read.
 
-    Registration:
-        email
-        username
-        last name
-        first name
-        password
-        confirm password
+	Registration:
+		email
+		username
+		last name
+		first name
+		password
+		confirm password
 
-    Sign In:
-        username
-        password
+	Sign In:
+		username
+		password
 
-    Change password:
-        new password
-        confirm password
+		Registration
+		Reset Password
 
-    Profile:
-        Gender
-        Sexual Preferences
-        Bio
-        List of interests(tags)
-        Pictures/Profile, max 5
-        Age, (because you need to sort matches by age)
+	Change password:
+		action:
+			send_link:
+				email address
 
-        all editable, as well as first name, last name, email address
+			hash:
+				new password
+				confirm password
 
-        Users who viewed the user's profile ("Who viewed you")
-        Users who "liked" the user's profile
+	Profile:
+		Gender
+		Sexual Preferences
+		Bio
+		List of interests(tags)
+		Pictures/Profile, max 5
+		Age, (because you need to sort matches by age)
 
-        "fame rating"
+		all editable, as well as first name, last name, email address
 
-        Location, via GPS if permitted by user, via IP address if not.
-        editable
+		Users who viewed the user's profile ("Who viewed you")
+		Users who "liked" the user's profile
 
-    Suggestions:
-        List of people that match the users profile based on strict and loose criteria:
-            Strict: (Must be compatible)
-                gender and sexual orientation
-            
-            Loose: (Used as metrics to match users)
-                Geographic Location, (I was thinking distance instead)
-                common tags
-                fame rating
+		"fame rating"
 
-        Sortable and filterable by age, location, fame and common tags
+		Location, via GPS if permitted by user, via IP address if not.
+		editable
 
-    Search:
-        Users can perform an advanced search by selecting a number of criteria:
-            Age gap
-            fame rating
-            Location
-            tags
-        
-        Sortable and filterable by age, location, fame and common tags
+	Suggestions:
+		List of people that match the users profile based on strict and loose criteria:
+			Strict: (Must be compatible)
+				gender and sexual orientation
+			
+			Loose: (Used as metrics to match users)
+				Geographic Location, (I was thinking distance instead)
+				common tags
+				fame rating
 
-    Other Users profile pages:
-        First name
-        Last name
-        username
-        Gender
-        Sexual Preferences
-        Bio
-        tags
-        Profile Pictures
-        Age
-        fame rating
-        "online" status, date and time of last connection if not currently online
-        "Like" status, the other users likes the current user, the two users are "connected"
+		Sortable and filterable by age, location, fame and common tags
 
-        When a user views another persons profile, the user must be added to the other persons "Who viewed you"
+	Search:
+		Users can perform an advanced search by selecting a number of criteria:
+			Age gap
+			fame rating
+			Location
+			tags
+		
+		Sortable and filterable by age, location, fame and common tags
 
-        Ability to report as fake
-        Ability to block, A blocked user does not appear in search results and won't generate notifications
-        Ability to "unlike"/disconnect
+	Other Users profile pages:
+		First name
+		Last name
+		username
+		Gender
+		Sexual Preferences
+		Bio
+		tags
+		Profile Pictures
+		Age
+		fame rating
+		"online" status, date and time of last connection if not currently online
+		"Like" status, the other users likes the current user, the two users are "connected"
 
-        If the current user has a profile picture:
-            The user must be able to like the other user's profile
-            If two users like each other then they must become "connected" and must be able to chat with eachother
+		When a user views another persons profile, the user must be added to the other persons "Who viewed you"
 
-    Chat:
-        When two users are connected, they must be able to “chat” in real time.
-        The user must be able to see from any page if a new message is received
-        Maximum of ten second delay is tolerable
+		Ability to report as fake
+		Ability to block, A blocked user does not appear in search results and won't generate notifications
+		Ability to "unlike"/disconnect
 
-    Notifications:
-        Received a “like”.
-        Profile has been viewed.
-        Received a message.
-        A “liked” user “liked” back.
-        A User “unliked” you.
+		If the current user has a profile picture:
+			The user must be able to like the other user's profile
+			If two users like each other then they must become "connected" and must be able to chat with eachother
 
-        Maximum of ten second delay is tolerable
-        A user must be able to see, from any page that a notification hasn’t been read.
+	Chat:
+		When two users are connected, they must be able to “chat” in real time.
+		The user must be able to see from any page if a new message is received
+		Maximum of ten second delay is tolerable
+
+	Notifications:
+		Received a “like”.				liked you
+		Profile has been viewed.		viewed your profile
+		Received a message.				sent you a message
+		A “liked” user “liked” back.	liked you back
+		A User “unliked” you.			unliked you
+
+		Maximum of ten second delay is tolerable
+		A user must be able to see, from any page that a notification hasn’t been read.
+
+		Hint: setInterval function
