@@ -7,6 +7,10 @@
 		$stmt = $conn->prepare('SELECT ' . $columns . ' FROM ' . $table . ' WHERE ' . $comparator[0] . ' = :value');
 		$stmt->execute(array('value' => $comparator[1]));
 		$results = $stmt->fetchAll();
+		if (!isset($results))
+			return (NULL);
+		if (!isset($results[0]))
+			return (NULL);
 		return ($results);
 	}
 
@@ -16,6 +20,10 @@
 		$stmt = $conn->prepare('SELECT ' . $columns . ' FROM ' . $table . ' WHERE ' . $condition);
 		$stmt->execute($values);
 		$results = $stmt->fetchAll();
+		if (!isset($results))
+			return (NULL);
+		if (!isset($results[0]))
+			return (NULL);
 		return ($results);
 	}
 
@@ -69,9 +77,16 @@
 	function get_user_id($username)
 	{
 		$results = get_results('users', 'id_user', array('username', $username));
-		if (isset($results[0]))
-			return ($results[0]['id_user']);
-		else
+		if (!$results)
 			return (NULL);
+		return ($results[0]['id_user']);
+	}
+
+	function delete_record($table, $comparator)
+	{
+		$conn = connect_to_db();
+		$sql = 'DELETE  FROM ' . $table . ' WHERE ' . $comparator[0] . '= :value';
+		$data = array('value' => $comparator[1]);
+		$stmt->execute($data);
 	}
 ?>
