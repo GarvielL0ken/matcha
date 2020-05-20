@@ -2,7 +2,7 @@
 	session_start();
 	if ($_POST['submit'] == "Verify Email")
 	{
-		$results = get_results('hashes', '*', array('verification', $POST['hash']));
+		$results = get_results('hashes', '*', array('verification', $_POST['hash']));
 		if (!$results)
 		{
 			$page = '../site/verify_email.php?action="display_message"';
@@ -15,22 +15,12 @@
 		}
 		$id_user = $results[0]['id_user'];
 		update_record('users', array('verified' => true), array('id_user', $id_user));
-		$num_hashes = 0;
-		$results[0]['id_user'] = NULL;
-		foreach ($results[0] as $hash)
-		{
-			if ($hash)
-				$num_hashes++;
-		}
-		if ($num_hashes > 1)
-			update_record('hashes', array('verification' => NULL), array('id_user', $id_user));
-		else
-			delete_record('hashes', array('id_user', $id_user));
+		remove_hash('verification', $_POST['hash']);
 	}
 	if ($_POST['submit'] == 'Send Link')
 	{
 		$email = $_POST['email'];
-		$results = get_results('users', 'id_user', array('email', $email));
+		$results = get_results('users', 'id_user, username', array('email', $email));
 		if (!$results)
 		{
 			$page = '../site/verfiy_email.php?action=resend_link';
@@ -38,6 +28,13 @@
 			$user_data = array('email' => $email);
 			redirect_to_page($page, $error_msg, $user_data);
 		}
-
+		$id_user = $results[0]['id_user'];
+		$username = $results[0]['username'];
+		$hash = generate_hash();
+		send_verification_email($username, $email, $hash);
+		$data = array('id_user' => $id_user, 'verification' => $hash);
+		update_record('hashes', $data, array('id_user', $id_user));
+		$error_msg = 'Another email has been sent<br>If no email was recieved click <a href= "./verify_email?action=resend_link">here</a>';
+		redirect_to_page('../site/verify_email?action=verify_email', $error_msg, array('email' => $email));
 	}
 ?>

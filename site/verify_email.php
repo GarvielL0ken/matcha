@@ -6,6 +6,7 @@ require_once "header.php";
 <body>
 	<form action= '../config/verify_email.php' method= 'POST'>
 		<?php
+			$html = NULL;
 			if ($_GET['action'] == 'resend_link')
 			{
 				$value = 'placeholder= "j.doe@gmail.com"';
@@ -27,13 +28,12 @@ require_once "header.php";
 				$html .= '<pre>Hash: <input required type= "text" name= "hash" ' . $value . '></pre>';
 				$submit = "Verify Email";
 			}
-			if ($_GET['action'] == 'display_message')
-				print_error_msg();
-			else
+			if ($html)
 			{
 				$html .= '<pre><input type= "submit" name= "submit" value= "' . $submit . '"></pre>';
 				print($html);
 			}
+			print_error_msg();
 		?>
 	</form>
 </body>

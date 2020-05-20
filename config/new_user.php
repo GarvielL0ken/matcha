@@ -43,6 +43,6 @@
 	$hash = generate_hash();
 	send_verification_email($username, $email, $hash);
 	insert_new_record('hashes', array('id_user' => $user_id, 'verification' => $hash));
-	redirect_to_page('../site/verify_email.php?action=display_message', 
+	redirect_to_page('../site/verify_email.php?action=verify_email', 
 						'A link has been sent to you via email to verify your account<br>Verify your account before attempting to login');
 ?>

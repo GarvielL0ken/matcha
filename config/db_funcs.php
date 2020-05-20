@@ -52,6 +52,23 @@
 			return (0);
 		return (1);
 	}
+
+	function remove_hash($field, $hash)
+	{
+		$results = get_results('hashes', '*', array($field, $hash));
+		$num_hashes = 0;
+		$id_user = $results[0]['id_user'];
+		$results[0]['id_user'] = NULL;
+		foreach ($results[0] as $db_hash)
+		{
+			if ($db_hash)
+				$num_hashes++;
+		}
+		if ($num_hashes > 1)
+			update_record('hashes', array($field => NULL), array('id_user', $id_user));
+		else
+			delete_record('hashes', array('id_user', $id_user));
+	}
 	
 	function update_record($table, $data, $comparator)
 	{

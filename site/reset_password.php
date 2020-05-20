@@ -23,8 +23,9 @@
 					if (isset($_GET['hash']))
 					{
 						$_SESSION['reset_password_hash'] = $_GET['hash'];
-						print('<pre>New password: <input required type= "password" name= "new_password"></pre>
+						print('<pre>    New password: <input required type= "password" name= "new_password"></pre>
 						<pre>Confirm password: <input required type= "password" name= "confirm_pasword"></pre>
+						<pre>            Hash: <input required type= "text" name= "hash" value= "' . $_GET['hash'] . '"></pre>
 						<input type= "submit" name= "submit" value= "Reset password">');
 					}
 					else
@@ -34,7 +35,6 @@
 								<pre>If no email was recieved <a href= "./reset_password.php?action=send_link">click here</a> to resend the email</pre>');
 					}
 				}
-				else if ($)
 				else if ($_GET['action'] == 'display_message')
 					print_error_msg();
 			?>
