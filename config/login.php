@@ -9,7 +9,7 @@
 	if (!$username || !$passwd)
 		return (print(1))
 	$passwd = hash( 'whirlpool', $passwd);
-	$results = get_results('users', 'passwd, verified', array('username' => $username));
+	$results = get_results('users', 'passwd, verified', array('username', $username));
 	if (!$results)
 		redirect_to_page('../site/login.php', 'Password and username do not match');
 	if ($results[0]['passwd'] != $passwd)

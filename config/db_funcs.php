@@ -10,6 +10,15 @@
 		return ($results);
 	}
 
+	function get_results_extended($table, $columns, $condition, $values)
+	{
+		$conn = connect_to_db();
+		$stmt = $conn->prepare('SELECT ' . $columns . ' FROM ' . $table . ' WHERE ' . $condition);
+		$stmt->execute($values);
+		$results = $stmt->fetchAll();
+		return ($results);
+	}
+
 	function insert_new_record($table, $data)
 	{
 		$conn = connect_to_db();

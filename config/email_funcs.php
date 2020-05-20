@@ -24,4 +24,19 @@
 					</html>";
 		return (send_email($email, 'Matcha: Reset Passowrd', $message));
 	}
+
+	function send_verification_email($username, $email, $hash)
+	{
+		global $DOMAIN_NAME;
+
+		$verification_link = "<a href='" . $DOMAIN_NAME . "/matcha/site/verify_email.php?action=verify_email&hash=$hash'>Link</a>";
+		$message = "<html>
+						<body>
+							<pre>Hello $username.</pre>
+							<pre>Verify your Matcha Account by clicking on the following link: $verification_link</pre>
+							<pre>If this was not you then ignore this email</pre>
+						</body>
+					</html>";
+		send_email($email, "Verify your Matcha Account", $message);
+	}
 ?>

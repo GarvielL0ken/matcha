@@ -4,7 +4,7 @@
 	session_start();
 	$set = isset($_SESSION['user_data']);
 	$fields = array('first_name', 'last_name', 'username', 'email');
-	$placeholders = array('John', 'Doe', 'J.Doe', 'jdoe@gmail.com');
+	$placeholders = array('first_name' => 'John', 'last_name' => 'Doe', 'username' => 'J.Doe', 'email' =>' jdoe@gmail.com');
 	$html_array = array();
 	foreach ($fields as $field)
 	{

@@ -1,5 +1,6 @@
 <?php
 	require_once 'funcs.php';
+	require_once 'email_funcs.php';
 	require_once 'validation_funcs.php';
 	require_once 'db_funcs.php';
 
@@ -22,6 +23,7 @@
 	$confirm_passwd = $_POST['confirm_passwd'];
 	$user_data = array('first_name' => $first_name, 'last_name' => $last_name, 'username' => $username, 'email' => $email);
 	$location = '../site/registration.php';
+	global $RGX_USERNAME;
 
 	if (!ctype_alpha($first_name))
 		redirect_to_page($location, 'Names must only be alphabetical characters', $user_data, array('first_name'));
@@ -38,7 +40,9 @@
 	$user_data['passwd'] = hash( 'whirlpool', $passwd);
 	insert_new_record('users', $user_data);
 	$user_id = get_user_id($user_data['username']);
-	print_r($user_id);
-	insert_new_record('hashes', array('id_user' => $user_id, 'verification' => generate_hash()));
-	redirect_to_page('../site/login.php', 'A link has been sent to you via email to verify your account<br>Verify your account before attempting to login');
+	$hash = generate_hash();
+	send_verification_email($username, $email, $hash);
+	insert_new_record('hashes', array('id_user' => $user_id, 'verification' => $hash));
+	redirect_to_page('../site/verify_email.php?action=display_message', 
+						'A link has been sent to you via email to verify your account<br>Verify your account before attempting to login');
 ?>

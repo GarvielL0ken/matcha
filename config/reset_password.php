@@ -21,7 +21,7 @@
 
 	function reset_password($post)
 	{
-		//$results = get_results('hashes', 'id_user', array('reset_passwd', $_SESSION['hash']))
+		//$results = get_results('hashes', 'id_user', array('reset_passwd', $_SESSION['reset_password_hash']))
 		return (0);
 	}
 

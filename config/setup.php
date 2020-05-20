@@ -32,6 +32,8 @@
 			$sql = "CREATE TABLE IF NOT EXISTS `likes` (
 				`id_user_1`			INT				NOT NULL,
 				`id_user_2`			INT				NOT NULL,
+				`like_user_1`		BOOLEAN			NOT NULL		DEFAULT TRUE,
+				`like_user_2`		BOOLEAN			NOT NULL		DEFAULT	FALSE,
 				`match`				BOOLEAN			NOT NULL		DEFAULT FALSE)";
 			$conn->exec($sql);
 			$sql = "CREATE TABLE IF NOT EXISTS `messages` (
