@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h3>{{ title }}</h3>
+	<form action='' method='POST'>
+		{{ form.first_name.label }}
+		{{ form.first_name(size=32, required=true) }}
+		<br>
+		{{ form.last_name.label }}
+		{{ form.last_name(size=32, required=true) }}
+		<br>
+		{{ form.username.label }}
+		{{ form.username(size=32, required=true) }}
+		<br>
+		{{ form.email.label }}
+		{{ form.email(size=32, required=true) }}
+		<br>
+		{{ form.password.label }}
+		{{ form.password(size=32, required=true) }}
+		<br>
+		{{ form.confirm_password.label }}
+		{{ form.confirm_password(size=32, required=true) }}
+		<br>
+		{{ form.submit }}
+	<form>
+	<hr>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul>
+			{% for message in messages %}
+				<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	{% endwith %}
+{% endblock %}
