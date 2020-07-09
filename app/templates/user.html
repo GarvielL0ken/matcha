@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h3>{{ title }}</h3>
+	<pre><h1>{{ user.username }}</h1>{{ user.online_status }} : {{ user.like_status[1] }}</pre>
+	<form>
+		{% if user.like_status[0] %}
+			{{ form.unlike }}
+		{% else %}
+			{{ form.like }}
+		{% endif %}
+		{{ form.block }}
+		{{ form.report }}
+	</form>
+	<h2>{{ user.first_name}} {{ user.last_name }}</h2>
+	<h3>Age: {{ user.age }}</h3>
+	<h3>Gender: {{ user.gender }}</h3>
+	<h3>Fame Rating: {{ user.fame_rating }}</h3>
+	<h3>Preference For: </h3>
+	<ul>
+		{% for preference in user.preferences %}
+			<li>{{ preference }}</li>
+		{% endfor %}
+	</ul>
+	<p> {{ user.bio }}</p>
+	<p> {{ user.tags }}</p>
+	<pre>Profile Pictures:</pre>
+	<div class= "image_slider_container">
+		{% for image in user.profile_pictures %}
+			<div class= "slide">
+				<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

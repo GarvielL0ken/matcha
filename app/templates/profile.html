@@ -2,4 +2,91 @@
 
 {% block content %}
 	<h3>{{ title }}</h3>
+	{% if action == 'edit' %}
+		<pre>Edit</pre>
+		<form action='' enctype='multipart/form-data' method='POST'>
+			{{ form.username.label }}
+			{{ form.username(required=true, value=user.username) }}
+			<br>
+			{{ form.first_name.label }}
+			{{ form.first_name(required=true, value=user.first_name) }}
+			<br>
+			{{ form.last_name.label }}
+			{{ form.last_name(required=true, value=user.last_name) }}
+			<br>
+			{{ form.email.label }}
+			{{ form.email(required=true, value=user.email) }}
+			<br>
+			{{ form.age.label }}
+			{{ form.age(required=true, value=user.age)}}
+			<br>
+			{{ form.gender.label }}
+			{{ form.gender(required=true, value=user.gender) }}
+			<br>
+			{{ form.preferences.label }}
+			{{ form.preferences(required=true)}}
+			<br>
+			{{ form.bio.label }}
+			{{ form.bio(required=true, value=user.bio)}}
+			<br>
+			{{ form.tags.label }}
+			{{ form.tags(required=true)}}
+			<br>
+			{{ form.pict_0(required=true) }}
+			<br>
+			{{ form.pict_1 }}
+			<br>
+			{{ form.pict_2 }}
+			<br>
+			{{ form.pict_3 }}
+			<br>
+			{{ form.pict_4 }}
+			<br>
+			{{ form.location.label }}
+			{{ form.location(required=true)}}
+			<br>
+			{{ form.submit }}
+		<form>
+	{% else %}
+		<h1>{{ user.username }}</h1>
+		<h2>{{ user.first_name}} {{ user.last_name }}</h2>
+		<h3>Age: {{ user.age }}</h3>
+		<h3>Gender: {{ user.gender }}</h3>
+		<h3>Fame Rating: {{ user.fame_rating }}</h3>
+		<h3>Preference For: </h3>
+		<ul>
+			{% for preference in user.preferences %}
+				<li>{{ preference }}</li>
+			{% endfor %}
+		</ul>
+		<p> {{ user.bio }}</p>
+		<p> {{ user.tags }}</p>
+		<pre>Your Profile Pictures:</pre>
+		<div class= "image_slider_container">
+			{% for image in user.profile_pictures %}
+				<div class= "slide">
+					<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
+				</div>
+			{% endfor %}
+		</div>
+		<pre>Users who liked you:</pre>
+		<div class= "image_slider_container">
+			{% for user in user.liked_by %}
+				<div class= "slide">
+					<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
+				</div>
+			{% endfor %}
+		</div>
+		<pre>Users who viewed you:</pre>
+		<div class= "image_slider_container">
+			{% for user in user.viewed_by %}
+				<div class= "slide">
+					<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
+				</div>
+			{% endfor %}
+		</div>
+		<pre> {{ user.email }}</pre>
+		<pre> {{ user.location }}</pre>
+		<a href="{{ url_for('profile', action='edit') }}"><input type="button" value="Edit Info"></a>
+	{% endif %}
 {% endblock %}

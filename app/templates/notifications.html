@@ -2,4 +2,12 @@
 
 {% block content %}
 	<h3>{{ title }}</h3>
+	{% for notification in notifications %}
+	<div>
+		<a href= "{{ url_for(notification.url) }}">
+			<pre>{{ notification.time }}</pre>
+			<pre>{{ notification.text }}</pre>
+		</a>
+	</div>
+	{% endfor %}
 {% endblock %}

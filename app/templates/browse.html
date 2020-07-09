@@ -2,4 +2,14 @@
 
 {% block content %}
 	<h3>{{ title }}</h3>
+	{% for user in users %}
+		<div>
+			<a href= "{{ url_for('user', username=user.username) }}">
+				<img src="../../resources/placeholder.png" alt="placeholder" width="100" height="100">
+				<pre>{{ user.username }}</pre>
+				<pre>Age: {{ user.age }} Gender: {{ user.gender }}</pre>
+				<pre>Favour: {{ user.fame_rating }}</pre>
+			</a>
+		</div>
+	{% endfor %}
 {% endblock %}

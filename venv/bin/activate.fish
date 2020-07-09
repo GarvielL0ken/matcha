@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/mnt/c/Bitnami/wampstack-7.3.13-0/apache2/htdocs/matcha_flask/venv"
+set -gx VIRTUAL_ENV "/mnt/c/Bitnami/wampstack-7.3.13-0/apache2/htdocs/matcha/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

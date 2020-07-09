@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/mnt/c/Bitnami/wampstack-7.3.13-0/apache2/htdocs/matcha_flask/venv"
+VIRTUAL_ENV="/mnt/c/Bitnami/wampstack-7.3.13-0/apache2/htdocs/matcha/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
