@@ -17,20 +17,20 @@
 			{{ form.email.label }}
 			{{ form.email(required=true, value=user.email) }}
 			<br>
-			{{ form.age.label }}
-			{{ form.age(required=true, value=user.age)}}
+			{{ form.dob.label }}
+			{{ form.dob(required=true, value=user.dob) }}
 			<br>
 			{{ form.gender.label }}
-			{{ form.gender(required=true, value=user.gender) }}
+			{{ form.gender(required=true) }}
 			<br>
 			{{ form.preferences.label }}
-			{{ form.preferences(required=true)}}
+			{{ form.preferences(required=true) }}
 			<br>
 			{{ form.bio.label }}
-			{{ form.bio(required=true, value=user.bio)}}
+			{{ form.bio(required=true, value=user.bio) }}
 			<br>
 			{{ form.tags.label }}
-			{{ form.tags(required=true)}}
+			{{ form.tags(required=true) }}
 			<br>
 			{{ form.pict_0(required=true) }}
 			<br>
@@ -43,13 +43,13 @@
 			{{ form.pict_4 }}
 			<br>
 			{{ form.location.label }}
-			{{ form.location(required=true)}}
+			{{ form.location(required=true) }}
 			<br>
 			{{ form.submit }}
 		<form>
 	{% else %}
 		<h1>{{ user.username }}</h1>
-		<h2>{{ user.first_name}} {{ user.last_name }}</h2>
+		<h2>{{ user.first_name }} {{ user.last_name }}</h2>
 		<h3>Age: {{ user.age }}</h3>
 		<h3>Gender: {{ user.gender }}</h3>
 		<h3>Fame Rating: {{ user.fame_rating }}</h3>
