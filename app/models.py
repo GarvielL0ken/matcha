@@ -94,6 +94,15 @@ class User():
 					user[a] = vars(self)[a]
 		return (user)
 
+	def get_notifications(self):
+		notifications = []
+		return (notifications)
+
+	def browse_users(self):
+
+		users = get_results('users', all=True)
+		return (users)
+
 	def preferences_int_to_array(self):
 		arr_preferences = []
 		print("Pref to array : preference : " + str(self.preferences))

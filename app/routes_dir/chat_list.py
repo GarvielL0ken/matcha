@@ -10,14 +10,12 @@ from app.models import User
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
 	##Redirect if not logged in
-	if (session['id_user'] == 0):
+	try:
+		if (session['id_user'] != 0):
+			user = User(session['id_user'])
+	except:
 		return redirect(url_for('login'))
 
-	lst_users = []
-	u = User(1)
-	u.set_message('I like apples', '2 min ago')
-	lst_users.append((u.data_to_dict('chat_preview')))
-	u = User(2)
-	u.set_message("I don't like apples", 'now')
-	lst_users.append(u.data_to_dict('chat_preview'))
-	return (render_template('chat.html', title="Chat", users=lst_users))
+	##Get all users that have a chat with the current user
+	messages = get_messages(session['id_user'], method='summary')
+	return (render_template('chat.html', title="Chat", messages=messages))

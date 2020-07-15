@@ -9,7 +9,11 @@ from app import app
 @app.route('/notifications', methods=['GET', 'POST'])
 def notifications():
 	##Redirect if not logged in
-	if (session['id_user'] == 0):
+	try:
+		if (session['id_user'] != 0):
+			user = User(session['id_user'])
+	except:
 		return redirect(url_for('login'))
 	
-	return (render_template('notifications.html', title="Notifications"))
+	notifications = user.get_notifications()
+	return (render_template('notifications.html', title="Notifications", notifications=notifications))

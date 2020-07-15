@@ -11,12 +11,17 @@ from app.models import User
 @app.route('/user/<username>')
 def user(username):
 	##Redirect if not logged in
-	if (session['id_user'] == 0):
+	try:
+		if (session['id_user'] != 0):
+			user = User(session['id_user'])
+	except:
 		return redirect(url_for('login'))
 
-	print(request)
-	u = User(1)
-	user = u.data_to_dict('view')
+	u = User(username)
+	
 	form = User_Actions_Form()
-	form.check()
-	return (render_template('user.html', user=user, form=form))
+	if (form.check(request)):
+		form.action(request, user.id_user, u.id_user)
+
+	viewed_user = u.data_to_dict('view')
+	return (render_template('user.html', user=viewed_user, form=form))

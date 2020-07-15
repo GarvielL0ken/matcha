@@ -19,9 +19,8 @@ def browse():
 	except:
 		return redirect(url_for('login'))
 
-	lst_users = get_users(user)
-	#u = User(1)
-	#lst_users.append(u.data_to_dict('min'))
-	#u = User(2)
-	#lst_users.append(u.data_to_dict('min'))
+	##Pagination
+
+	##Get users based on the user preference and gender
+	lst_users = user.browse_users()
 	return (render_template('browse.html', title="Browse", users=lst_users))

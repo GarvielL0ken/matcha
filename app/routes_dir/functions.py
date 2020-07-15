@@ -15,17 +15,13 @@ def calculate_preferences(preference, arr_options):
 
 def get_users(user):
 	lst_users = []
-	print(user.preferences)
 	where = calculate_preferences(user.preferences, ['M', 'F'])
 	where['column'] = 'gender'
 	order_by = {
 		'column' : 'intrigue',
 		'order' : 'DESC'
 	}
-	print(where)
 	if (not where['value']):
 		where = {}
-	print(where)
 	lst_users = get_results('users', {}, where, all=True, order_by=order_by)
-	print(lst_users)
 	return (lst_users)

@@ -79,7 +79,7 @@ def insert_verification_hash(id_user):
 def insert_new_password_hash(id_user):
 	insert_hash('reset_password', id_user)
 
-def get_results(table, data, where={}, all=False, order_by={}):
+def get_results(table, data={}, where={}, all=False, order_by={}):
 	sql = "SELECT "
 	if (all):
 		sql += "*"

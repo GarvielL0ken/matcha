@@ -11,13 +11,17 @@ from app.models import User
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	##Redirect if not logged in
-	if (session['id_user'] == 0):
+	try:
+		if (session['id_user'] != 0):
+			user = User(session['id_user'])
+	except:
 		return redirect(url_for('login'))
-
 	action = request.args.get('action')
 	user = User(session['id_user'])
 	form = 0
 
+	##if (user.data_incomplete):
+	##	action = 'edit
 	if (not user.gender):
 		action = 'edit'
 	if (action == 'edit'):
