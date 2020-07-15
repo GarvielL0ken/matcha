@@ -99,16 +99,16 @@ def get_results(table, data={}, where={}, all=False, order_by={}):
 	return (results)
 
 def get_id_user(column, value):
-	data = {'id_user'}
+	data = {}
+	data['id_user'] = 0
 	where = {
 		'column' : column,
 		'value' : value
 	}
 
 	results = get_results('users', data, where)
-	id_user = results[0][0]
+	id_user = results[0]['id_user']
 	print("get_id_user(" + column + ", " + value + ") : " + str(id_user))
-
 	return (id_user)
 
 def is_in_database(table, data, where, return_results=False):

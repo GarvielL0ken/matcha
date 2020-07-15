@@ -99,7 +99,6 @@ class User():
 		return (notifications)
 
 	def browse_users(self):
-
 		users = get_results('users', all=True)
 		return (users)
 

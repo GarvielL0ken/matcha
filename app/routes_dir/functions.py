@@ -1,7 +1,10 @@
 #imports
 ##Standard Library
 ##Third Party
+from flask import session
+
 ##Local
+from app.models import User
 from app.sql.functions import get_results
 
 def calculate_preferences(preference, arr_options):
@@ -25,3 +28,10 @@ def get_users(user):
 		where = {}
 	lst_users = get_results('users', {}, where, all=True, order_by=order_by)
 	return (lst_users)
+
+def get_logged_in_user():
+	user = False
+	if (session):
+		if (session['id_user'] != 0):
+			user = User(session['id_user'])
+	return (user)

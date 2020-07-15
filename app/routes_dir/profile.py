@@ -28,5 +28,6 @@ def profile():
 		form = Edit_Profile_Form(gender = user.gender)
 		if (form.check(request)):
 			form.update_user_data(request, user)
+			return (redirect(url_for('profile')))
 	u = user.data_to_dict('profile')
 	return (render_template('profile.html', title="Profile", user=u, form=form, action=action))
