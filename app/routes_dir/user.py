@@ -1,7 +1,7 @@
 #imports
 ##Standard Library
 ##Third Party
-from flask import redirect, render_template, session, url_for
+from flask import redirect, render_template, request, session, url_for
 
 ##Local
 from app import app
@@ -14,6 +14,7 @@ def user(username):
 	if (session['id_user'] == 0):
 		return redirect(url_for('login'))
 
+	print(request)
 	u = User(1)
 	user = u.data_to_dict('view')
 	form = User_Actions_Form()

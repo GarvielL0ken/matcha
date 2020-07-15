@@ -31,7 +31,7 @@ def drop_table(table):
 	sql = "DROP TABLE " + table
 	execute_sql(sql)
 
-#drop_table('users')
-#drop_table('hashes')
-#drop_table('tags')
-#drop_table('tag_map')
+drop_table('users')
+drop_table('hashes')
+drop_table('tags')
+drop_table('tag_map')

@@ -2,10 +2,19 @@ from app.sql.functions import get_results
 from app.forms.functions import required
 
 class User():
-	def __init__(self, id_user):
+	def __init__(self, id_user, username=''):
+		column : str
+
+		if (username):
+			column = 'username'
+			value = username
+		else:
+			column = 'id_user'
+			value = id_user
+
 		where = {
-			'column' : 'id_user',
-			'value' : id_user
+			'column' : column,
+			'value' : value
 		}
 		results = get_results('users', {}, where, all=True)
 		user = results[0]
@@ -76,8 +85,22 @@ class User():
 						gender = 'Male'
 					elif (vars(self)[a] == 'F'):
 						gender = 'Female'
-				if (gender):
+				if (a == 'preferences'):
+					if (self.preferences):
+						user[a] = self.preferences_int_to_array()
+				elif (gender):
 					user[a] = gender
 				else:
 					user[a] = vars(self)[a]
 		return (user)
+
+	def preferences_int_to_array(self):
+		arr_preferences = []
+		print("Pref to array : preference : " + str(self.preferences))
+		print(self.preferences % 2)
+		print((self.preferences >> 1) % 2)
+		if (self.preferences % 2):
+			arr_preferences.append('Male')
+		if ((self.preferences >> 1) % 2):
+			arr_preferences.append('Female')
+		return (arr_preferences)

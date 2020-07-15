@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 
 ##Local
 from app.forms.functions import required
+from app.sql.functions import insert_record, insert_verification_hash
 
 class Registration_Form(FlaskForm):
 	first_name = StringField('First name')

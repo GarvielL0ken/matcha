@@ -30,8 +30,9 @@ def data_to_column(data, format_codes=False, brackets=True, paired=False):
 
 	return (columns)
 
-
 def	execute_sql(sql, data={}, return_id=False, query=False, dictionary=False):
+	print(sql)
+	print(str(data))
 	conn = get_connection(dictionary)
 	cnx = conn['connection']
 	cursor = conn['cursor']
@@ -78,15 +79,20 @@ def insert_verification_hash(id_user):
 def insert_new_password_hash(id_user):
 	insert_hash('reset_password', id_user)
 
-def get_results(table, data, where, all=False):
+def get_results(table, data, where={}, all=False, order_by={}):
 	sql = "SELECT "
 	if (all):
 		sql += "*"
 	else:
 		sql += data_to_column(data, brackets=False)
-	sql += " FROM " + table + " WHERE "
-	sql += where['column'] + " = %(value)s"
-	data['value'] = where['value']
+	sql += " FROM " + table
+	if (where):
+		sql += " WHERE "
+		sql += where['column'] + " = %(value)s"
+		data['value'] = where['value']
+	if (order_by):
+		sql += " ORDER BY "
+		sql += order_by['column'] + " " + order_by['order']
 
 	results = execute_sql(sql, data, query=True, dictionary=True)
 	#print(results)
@@ -125,6 +131,7 @@ def update_record(table, data, where={}):
 	for column in where:
 		data[column] = where[column]
 	execute_sql(sql, data)
+	return (True)
 
 #data = {
 #	'username' : "Not Garviel",

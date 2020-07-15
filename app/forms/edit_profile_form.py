@@ -33,7 +33,7 @@ class Edit_Profile_Form(FlaskForm):
 		self.tag_data = []
 		user_data = {}
 
-		excluded_fields = ['pict_0', 'pict_1', 'pict_2', 'pict_3', 'pict_4', 'user_data', 'tag_data']
+		excluded_fields = ['pict_0', 'pict_1', 'pict_2', 'pict_3', 'pict_4', 'user_data', 'tag_data', 'location']
 		altered_fields = ['preferences']
 		preferences = ['male', 'female']
 
@@ -78,7 +78,8 @@ class Edit_Profile_Form(FlaskForm):
 			except:
 				data[field_name] = self.user_data[field_name]
 
-		update_record('users', self.data, where)
+		print("Update user : " + str(self.user_data))
+		update_record('users', self.user_data, where)
 		##Remove old user images if they are overwritten
 		##Add user images to the server
 		return (True)
