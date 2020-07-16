@@ -7,15 +7,15 @@ from flask import redirect, render_template, request, session, url_for
 from app import app
 from app.forms.edit_profile_form import Edit_Profile_Form
 from app.models import User
+from app.routes_dir.functions import get_logged_on_user
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	##Redirect if not logged in
-	try:
-		if (session['id_user'] != 0):
-			user = User(session['id_user'])
-	except:
+	user = get_logged_on_user()
+	if (not user):
 		return redirect(url_for('login'))
+
 	action = request.args.get('action')
 	user = User(session['id_user'])
 	form = 0

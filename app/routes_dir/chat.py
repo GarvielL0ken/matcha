@@ -8,14 +8,12 @@ from flask import redirect, render_template, request, session, url_for
 from app import app
 from app.forms.chat_form import Chat_Form
 from app.sql.functions import get_id_user
-from app.routes_dir.functions import get_logged_in_user
+from app.routes_dir.functions import get_logged_on_user
 
 @app.route('/chat/<username>', methods=['GET', 'POST'])
 def chat_user(username):
-	print('Logged In?')
-	print(str(session['id_user']))
 	##Redirect if not logged in
-	user = get_logged_in_user()
+	user = get_logged_on_user()
 	if (not user):
 		return redirect(url_for('login'))
 

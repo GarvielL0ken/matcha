@@ -29,9 +29,10 @@ def get_users(user):
 	lst_users = get_results('users', {}, where, all=True, order_by=order_by)
 	return (lst_users)
 
-def get_logged_in_user():
+def get_logged_on_user():
 	user = False
 	if (session):
-		if (session['id_user'] != 0):
-			user = User(session['id_user'])
+		if (session['id_user']):
+			if (session['id_user'] != 0):
+				user = User(session['id_user'])
 	return (user)

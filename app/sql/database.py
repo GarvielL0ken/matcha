@@ -53,3 +53,11 @@ TABLES['likes'] = (
 	"  `user_1_like`	BOOLEAN			DEFAULT FALSE,"
 	"  `user_2_like`	BOOLEAN			DEFAULT FALSE"
 	") ENGINE=InnoDB")
+TABLES['messages'] = (
+	"CREATE TABLE IF NOT EXISTS `messages` ("
+	"  `id_message`		INT				NOT NULL	AUTO_INCREMENT,"
+	"  `id_user_1`		INT				NOT NULL,"
+	"  `id_user_2`		INT				DEFAULT FALSE,"
+	"  `message`		VARCHAR(128)	DEFAULT FALSE,"
+	"  PRIMARY KEY (`id_message`)"
+	") ENGINE=InnoDB")

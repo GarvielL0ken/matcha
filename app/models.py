@@ -49,6 +49,7 @@ class User():
 		if (not like_status):
 			print("Record Does not exists")
 			self.like_status = [0, '']
+			return (True)
 
 		#Determine which user the viewed user is
 		column_self = 'user_1_like'
@@ -66,7 +67,7 @@ class User():
 		self.like_status = arr_like_status
 		return (True)
 
-	def set_message(self, message, time_sent):
+	def get_messages(self, id_user_2):
 		self.message = message
 		self.time_sent = time_sent
 

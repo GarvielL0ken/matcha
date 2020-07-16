@@ -152,6 +152,42 @@ def get_like_status(id_user_1, id_user_2):
 	else:
 		return (False)
 
+def get_matched_users(id_user):
+	sql = 'SELECT * FROM likes '
+	sql += 'WHERE (id_user_1 = %(id_user)s OR id_user_2 = %(id_user)s) '
+	sql += 'AND (user_1_like = 1 AND user_2_like = 1)'
+	data = {
+		'id_user' : id_user
+	}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	matched_users = []
+	i = 0
+	for result in results:
+		column = 'id_user_1'
+		if (id_user == result[column]):
+			column = 'id_user_2'
+		matched_users.append(result[column])
+		i += 1
+
+	return (matched_users)
+
+def get_messages(id_user, id_user_chat=0):
+	i : int
+
+	#Get all users who have matched with the current user
+	if (id_user_chat == 0):
+		matched_users = get_matched_users(id_user)
+		sql_and_data = construct_sql(action='get_messages', id_user=id_user, matched_users=matched_users, option='summary')
+		sql = sql_and_data[0]
+		data = sql_and_data[1]
+		messages = execute_sql(sql, data, query=True, dictionary=True)
+		print(str(messages))
+	else:
+		print('Get messages between two users')
+
+	print(str(matched_users))
+	return (matched_users)
+
 def update_like_status_db(data):
 	sql = 'UPDATE likes '
 	sql += 'SET '
