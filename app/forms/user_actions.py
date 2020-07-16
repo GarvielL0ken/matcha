@@ -22,18 +22,26 @@ class User_Actions_Form(FlaskForm):
 					return (False)
 		return (True)
 
-	def perform_action(self, action):
-		##Case Action:
-		##	Like:
-		##		add a new record to the database for the two users
-		##		Add a new Notification in the database for the liked user
-		##	Unlike:
-		##		Update the like status in the database
-		##		Remove the record if neither user likes the other
-		##	Block:
-		##		Add a record to the database
-		insert_record('blocked_users', self.data)
-		##	Report:
-		##		Add a record to the database for admin review
-		insert_record('reported_users', self.data)
+	def perform_action(self, action, current_user, viewed_user):
+		if (action == 'like'):
+			if (user_already_liked(current_user.id_user, viewed_user.id_user)):
+				match_users(current_user.id_user, viewed_user.id_user)
+			else
+				add_like(current_user.id_user, viewed_user.id_user)
+		elif (action == 'unlike'):
+			if (users_connected(current_user.id_user, viewed_user.id_user)):
+				disconnect_users(current_user.id_user, viewed_user.id_user)
+			else:
+				remove_like(current_user.id_user, viewed_user.id_user)
+		elif (action == 'block'):
+			data = {
+				'user_blockee' : current_user.id_user,
+				'user_blocked' : viewed_user.id_user
+			}
+			insert_record('blocked_user', data)
+		elif (action == 'report'):
+			data = {
+				'user_reported' : viewed_user.id_user
+			}
+			insert_record('reported_users', data)
 		return (True)

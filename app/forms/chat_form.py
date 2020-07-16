@@ -1,6 +1,6 @@
 #Imports
 ##Standard Library
-from datetime import date
+from datetime import datetime
 
 ##Third Party
 from flask import session
@@ -25,9 +25,12 @@ class Chat_Form(FlaskForm):
 
 	def send_message(self, user_from, user_to):
 		print(date.today())
+		obj_now = datetime.now()
+		str_now = obj_now.strftime('%Y/%m/%d %H:%M:%S')
 		data = {
 			'user_from' : user_from,
 			'user_to' : user_to,
-			'message' : self.message.data
+			'message' : self.message.data,
+			'time_sent' : str_now
 		}
-		#insert_record('messages', )
+		insert_record('messages', data)

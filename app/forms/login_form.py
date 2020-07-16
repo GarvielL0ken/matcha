@@ -43,10 +43,8 @@ class Login_Form(FlaskForm):
 			print(user_data['password'])
 			if (check_password_hash(user['password'], user_data['password'])):
 				self.id_user = user['id_user']
-				print('YES')
 				return (True)
 			else:
-				print("No")
 				return (False)
 
 		return (False)

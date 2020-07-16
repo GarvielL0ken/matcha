@@ -39,6 +39,8 @@ def	execute_sql(sql, data={}, return_id=False, query=False, dictionary=False):
 	cursor.execute(sql, data)
 	if (query):
 		results = cursor.fetchall()
+		cursor.close()
+		cnx.close()
 		return (results)
 	else:
 		cnx.commit()
@@ -132,6 +134,23 @@ def update_record(table, data, where={}):
 		data[column] = where[column]
 	execute_sql(sql, data)
 	return (True)
+
+def get_like_status(id_user_1, id_user_2):
+	sql = 'SELECT * ' 
+	sql += 'FROM likes ' 
+	sql += 'WHERE '
+	sql += '(id_user_1 = %(id_user_1) AND id_user_2 = %(id_user_2)) '
+	sql += 'OR (id_user_1 = %(id_user_2) AND id_user_2 = %(id_user_1))'
+	data = {
+		'id_user_1' : id_user_1,
+		'id_user_2' : id_user_2
+	}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	if (results):
+		result = results[0]
+		return (result)
+	else:
+		return (False)
 
 #data = {
 #	'username' : "Not Garviel",
