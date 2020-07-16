@@ -6,7 +6,7 @@ from wtforms import SubmitField
 from werkzeug.security import check_password_hash, generate_password_hash
 
 ##Local
-from app.forms.functions import required
+from app.forms.functions import required, add_like, remove_like
 from app.sql.functions import insert_record
 
 class User_Actions_Form(FlaskForm):
@@ -24,15 +24,9 @@ class User_Actions_Form(FlaskForm):
 
 	def perform_action(self, action, current_user, viewed_user):
 		if (action == 'like'):
-			if (user_already_liked(current_user.id_user, viewed_user.id_user)):
-				match_users(current_user.id_user, viewed_user.id_user)
-			else
-				add_like(current_user.id_user, viewed_user.id_user)
+			add_like(current_user.id_user, viewed_user.id_user)
 		elif (action == 'unlike'):
-			if (users_connected(current_user.id_user, viewed_user.id_user)):
-				disconnect_users(current_user.id_user, viewed_user.id_user)
-			else:
-				remove_like(current_user.id_user, viewed_user.id_user)
+			remove_like(current_user.id_user, viewed_user.id_user)
 		elif (action == 'block'):
 			data = {
 				'user_blockee' : current_user.id_user,

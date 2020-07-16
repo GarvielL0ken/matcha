@@ -139,8 +139,8 @@ def get_like_status(id_user_1, id_user_2):
 	sql = 'SELECT * ' 
 	sql += 'FROM likes ' 
 	sql += 'WHERE '
-	sql += '(id_user_1 = %(id_user_1) AND id_user_2 = %(id_user_2)) '
-	sql += 'OR (id_user_1 = %(id_user_2) AND id_user_2 = %(id_user_1))'
+	sql += '(id_user_1 = %(id_user_1)s AND id_user_2 = %(id_user_2)s) '
+	sql += 'OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_1)s)'
 	data = {
 		'id_user_1' : id_user_1,
 		'id_user_2' : id_user_2
@@ -152,6 +152,19 @@ def get_like_status(id_user_1, id_user_2):
 	else:
 		return (False)
 
+def update_like_status_db(data):
+	sql = 'UPDATE likes '
+	sql += 'SET '
+	sql += data_to_column(data, format_codes=True, brackets=False, paired=True)
+	sql += ' WHERE '
+	sql += '(id_user_1 = %(id_user_1)s AND id_user_2 = %(id_user_2)s) '
+	sql += 'OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_1)s)'
+	execute_sql(sql, data)
+
+def remove_record(table, where, data):
+	sql = 'DELETE FROM ' + table
+	sql += ' WHERE ' + where
+	execute_sql(sql, data)
 #data = {
 #	'username' : "Not Garviel",
 #	'first_name' : "John"
