@@ -1,4 +1,11 @@
-from app.sql.functions import get_results
+#imports
+##Standard Library
+from datetime import date
+
+##Third Party
+
+##Local
+from app.sql.functions import get_results, get_like_status
 from app.forms.functions import required
 
 class User():
@@ -23,6 +30,41 @@ class User():
 			#print(column_name)
 			#print(user[column_name])
 			setattr(self, column_name, user[column_name])
+
+		self.calculate_age()
+
+	def calculate_age(self):
+		dob = self.dob
+		today = date.today()
+		age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day)) 
+
+		self.age = age
+		return (True)
+
+	def determine_like_status(self, id_user):
+		print("Detemine Like Status")
+		like_status = get_like_status(self.id_user, id_user)
+		print('Like Status : ' + str(like_status))
+
+		if (not like_status):
+			print("Record Does not exists")
+			self.like_status = [0, '']
+
+		#Determine which user the viewed user is
+		column_self = 'user_1_like'
+		column_user = 'user_2_like'
+		if (self.id_user == like_status['id_user_2']):
+			column_self = 'user_2_like'
+			column_user = 'user_1_like'
+		
+		arr_like_status = [0, '']
+		if (like_status[column_user]):
+			arr_like_status[0] = 1
+		if (like_status[column_self]):
+			arr_like_status[1] = 'Likes You'
+		
+		self.like_status = arr_like_status
+		return (True)
 
 	def set_message(self, message, time_sent):
 		self.message = message

@@ -16,7 +16,7 @@ class Edit_Profile_Form(FlaskForm):
 	username = StringField('Username')
 	email = StringField('Email')
 	gender = RadioField('Gender', choices=[('M', 'Male'), ('F', 'Female')])
-	preferences = MultiCheckboxField('Preferences', choices=[('male', 'Male'), ('female', 'Female')])
+	preferences = MultiCheckboxField('Preferences', choices=[('Male', 'Male'), ('Female', 'Female')])
 	dob = StringField('Date of Birth, yyyy/mm/dd')
 	bio = TextAreaField('Bio')
 	tags = TextAreaField('Tags')

@@ -22,6 +22,6 @@ def user(username):
 	form = User_Actions_Form()
 	form.check(user, u)
 
+	u.determine_like_status(user.id_user)
 	viewed_user = u.data_to_dict('view')
-	viewed_user['like_status'] = [0, 'to be determined']
 	return (render_template('user.html', user=viewed_user, form=form))

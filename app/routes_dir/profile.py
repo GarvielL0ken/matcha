@@ -25,7 +25,8 @@ def profile():
 	if (not user.gender):
 		action = 'edit'
 	if (action == 'edit'):
-		form = Edit_Profile_Form(gender = user.gender)
+		print("user.preferences : " + str(user.preferences_int_to_array()))
+		form = Edit_Profile_Form(gender = user.gender, preferences = user.preferences_int_to_array(), bio = user.bio)
 		if (form.check(request)):
 			form.update_user_data(request, user)
 			return (redirect(url_for('profile')))

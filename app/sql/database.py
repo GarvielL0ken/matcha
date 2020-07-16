@@ -25,7 +25,7 @@ TABLES['users'] = (
 	"  `pict_2`			VARCHAR(64)		DEFAULT NULL,"
 	"  `pict_3`			VARCHAR(64)		DEFAULT NULL,"
 	"  `pict_4`			VARCHAR(64)		DEFAULT NULL,"
-	"  `intrigue`		INT				DEFAULT NULL,"
+	"  `fame_rating`	INT				DEFAULT NULL,"
 	"  PRIMARY KEY (`id_user`)"
 	") ENGINE=InnoDB")
 TABLES['hashes'] = (

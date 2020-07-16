@@ -24,7 +24,6 @@ class Chat_Form(FlaskForm):
 		return (True)
 
 	def send_message(self, user_from, user_to):
-		print(date.today())
 		obj_now = datetime.now()
 		str_now = obj_now.strftime('%Y/%m/%d %H:%M:%S')
 		data = {
