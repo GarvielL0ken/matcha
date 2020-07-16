@@ -3,7 +3,7 @@
 {% block content %}
 	<h3>{{ title }}</h3>
 	<pre><h1>{{ user.username }}</h1>{{ user.online_status }} : {{ user.like_status[1] }}</pre>
-	<form>
+	<form action='' method='POST'>
 		{% if user.like_status[0] %}
 			{{ form.unlike }}
 		{% else %}

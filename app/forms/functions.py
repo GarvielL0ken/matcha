@@ -1,4 +1,4 @@
-from app.sql.function import get_like_status, insert_record, update_like_status_db, remove_record
+from app.sql.functions import get_like_status, insert_record, update_like_status_db, remove_record
 
 def calculate_id(arr_elements, arr_options):
 	int_id : int

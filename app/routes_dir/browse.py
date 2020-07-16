@@ -13,10 +13,12 @@ from app.routes_dir.functions import get_users
 @app.route('/browse', methods=['GET', 'POST'])
 def browse():
 	##Redirect if not logged in
-	try:
+	user = False
+	if (session):
 		if (session['id_user'] != 0):
 			user = User(session['id_user'])
-	except:
+	
+	if (not user):
 		return redirect(url_for('login'))
 
 	##Pagination

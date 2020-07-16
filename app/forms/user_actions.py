@@ -18,6 +18,8 @@ class User_Actions_Form(FlaskForm):
 	def check(self, current_user, viewed_user):
 		for a in vars(self):
 			if (required(a)):
+				print(a)
+				print(vars(self)[a].data)
 				if (vars(self)[a].data):
 					self.perform_action(a, current_user, viewed_user)
 		return (True)

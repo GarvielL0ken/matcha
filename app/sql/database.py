@@ -46,3 +46,10 @@ TABLES['tag_map'] = (
 	"  `id_user`		INT				NOT NULL,"
 	"  `id_tag`			INT				NOT NULL"
 	") ENGINE=InnoDB")
+TABLES['likes'] = (
+	"CREATE TABLE IF NOT EXISTS `likes` ("
+	"  `id_user_1`		INT				NOT NULL,"
+	"  `id_user_2`		INT				NOT NULL,"
+	"  `user_1_like`	BOOLEAN			DEFAULT FALSE,"
+	"  `user_2_like`	BOOLEAN			DEFAULT FALSE"
+	") ENGINE=InnoDB")

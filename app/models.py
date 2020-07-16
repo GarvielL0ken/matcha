@@ -2,7 +2,7 @@ from app.sql.functions import get_results
 from app.forms.functions import required
 
 class User():
-	def __init__(self, id_user, username=''):
+	def __init__(self, id_user=0, username=''):
 		column : str
 
 		if (username):
