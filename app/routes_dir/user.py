@@ -20,8 +20,7 @@ def user(username):
 	u = User(username)
 	
 	form = User_Actions_Form()
-	if (form.check(request)):
-		form.action(request, user.id_user, u.id_user)
+	form.check(user, u)
 
 	viewed_user = u.data_to_dict('view')
 	return (render_template('user.html', user=viewed_user, form=form))

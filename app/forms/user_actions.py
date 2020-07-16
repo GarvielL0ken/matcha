@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 ##Local
 from app.forms.functions import required, add_like, remove_like
-from app.sql.functions import insert_record
+from app.sql.functions import insert_record, is_in_database, update_record
 
 class User_Actions_Form(FlaskForm):
 	like = SubmitField('Like')
@@ -15,11 +15,11 @@ class User_Actions_Form(FlaskForm):
 	block = SubmitField('Block')
 	report = SubmitField('Report as fake')
 
-	def check(self):
+	def check(self, current_user, viewed_user):
 		for a in vars(self):
 			if (required(a)):
-				if (vars(self)[a].data == ''):
-					return (False)
+				if (vars(self)[a].data):
+					self.perform_action(a, current_user, viewed_user)
 		return (True)
 
 	def perform_action(self, action, current_user, viewed_user):
@@ -35,7 +35,16 @@ class User_Actions_Form(FlaskForm):
 			insert_record('blocked_user', data)
 		elif (action == 'report'):
 			data = {
-				'user_reported' : viewed_user.id_user
+				'id_user' : viewed_user.id_user
 			}
+			where = {
+				'column' : 'id_user',
+				'value' : viewed_user.id_user
+			}
+			results = is_in_database('reported_users', {}, where, return_results=True)
+			if (results):
+				result = results[0]
+				data['number_of_reports'] = result['number_of_reports'] + 1
+				update_record('reported_users', data, where)
 			insert_record('reported_users', data)
 		return (True)
