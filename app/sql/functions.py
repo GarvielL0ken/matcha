@@ -153,7 +153,7 @@ def get_like_status(id_user_1, id_user_2):
 		return (False)
 
 def get_matched_users(id_user):
-	sql = 'SELECT * FROM likes '
+	sql = 'SELECT * FROM `likes` '
 	sql += 'WHERE (id_user_1 = %(id_user)s OR id_user_2 = %(id_user)s) '
 	sql += 'AND (user_1_like = 1 AND user_2_like = 1)'
 	data = {
@@ -171,22 +171,19 @@ def get_matched_users(id_user):
 
 	return (matched_users)
 
-def get_messages(id_user, id_user_chat=0):
-	i : int
-
-	#Get all users who have matched with the current user
-	if (id_user_chat == 0):
-		matched_users = get_matched_users(id_user)
-		sql_and_data = construct_sql(action='get_messages', id_user=id_user, matched_users=matched_users, option='summary')
-		sql = sql_and_data[0]
-		data = sql_and_data[1]
-		messages = execute_sql(sql, data, query=True, dictionary=True)
-		print(str(messages))
+def get_messages_db(id_user_1, id_user_2):
+	sql = 'SELECT * FROM messages '
+	sql += 'WHERE (id_user_from = %(id_user_1)s AND id_user_to = %(id_user_2)s) '
+	sql += 'OR (id_user_to = %(id_user_2)s AND id_user_from = %(id_user_1)s)	'
+	data = {
+		'id_user_1' : id_user_1,
+		'id_user_2' : id_user_2
+	}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	if (not results):
+		return (False)
 	else:
-		print('Get messages between two users')
-
-	print(str(matched_users))
-	return (matched_users)
+		return (results)
 
 def update_like_status_db(data):
 	sql = 'UPDATE likes '

@@ -31,8 +31,6 @@ def get_users(user):
 
 def get_logged_on_user():
 	user = False
-	if (session):
-		if (session['id_user']):
-			if (session['id_user'] != 0):
-				user = User(session['id_user'])
+	if (session.get('id_user')):
+		user = User(session['id_user'])
 	return (user)

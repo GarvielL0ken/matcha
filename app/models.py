@@ -1,11 +1,11 @@
 #imports
 ##Standard Library
-from datetime import date
+from datetime import date, datetime
 
 ##Third Party
 
 ##Local
-from app.sql.functions import get_results, get_like_status
+from app.sql.functions import get_results, get_like_status, get_messages_db
 from app.forms.functions import required
 
 class User():
@@ -67,9 +67,17 @@ class User():
 		self.like_status = arr_like_status
 		return (True)
 
-	def get_messages(self, id_user_2):
-		self.message = message
-		self.time_sent = time_sent
+	def get_messages(self, id_user_2, return_messages=False, return_most_recent=False):
+		messages = get_messages_db(self.id_user, id_user_2)
+		if (return_messages):
+			if (return_most_recent):
+				if (messages):
+					key = lambda message : message['time_sent']
+					messages = sorted(messages, key=key, reverse=True)
+					messages = messages[0]
+			return (messages)
+		else:
+			self.messages = messages
 
 	def data_to_dict(self, method):
 

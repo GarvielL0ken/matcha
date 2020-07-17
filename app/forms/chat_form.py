@@ -17,18 +17,19 @@ class Chat_Form(FlaskForm):
 	submit = SubmitField('Send Message')
 
 	def check(self, request):
-		if (request.method != 'POST'):
-			return (False)
-		if (not self.message.data):
-			return (False)
-		return (True)
+		valid = False
+		if (request.method == 'POST'):
+			if (self.message.data):
+				if (self.submit.data):
+					valid = True
+		return (valid)
 
 	def send_message(self, user_from, user_to):
 		obj_now = datetime.now()
 		str_now = obj_now.strftime('%Y/%m/%d %H:%M:%S')
 		data = {
-			'user_from' : user_from,
-			'user_to' : user_to,
+			'id_user_from' : user_from,
+			'id_user_to' : user_to,
 			'message' : self.message.data,
 			'time_sent' : str_now
 		}

@@ -56,8 +56,9 @@ TABLES['likes'] = (
 TABLES['messages'] = (
 	"CREATE TABLE IF NOT EXISTS `messages` ("
 	"  `id_message`		INT				NOT NULL	AUTO_INCREMENT,"
-	"  `id_user_1`		INT				NOT NULL,"
-	"  `id_user_2`		INT				DEFAULT FALSE,"
-	"  `message`		VARCHAR(128)	DEFAULT FALSE,"
+	"  `id_user_from`	INT				NOT NULL,"
+	"  `id_user_to`		INT				NOT NULL,"
+	"  `message`		VARCHAR(128)	NOT NULL,"
+	"  `time_sent`		DATETIME		NOT NULL,"
 	"  PRIMARY KEY (`id_message`)"
 	") ENGINE=InnoDB")

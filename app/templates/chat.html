@@ -2,21 +2,38 @@
 
 {% block content %}
 	<h3>{{ title }}</h3>
-	{% if user.messages %}
-		<h2>{{ user.username }}</h2>
+	{% if action == 'chat' %}
+		<h2>{{ u.username }}</h2>
 		{% for message in user.messages %}
-		<div>
+		{% if message.user_from %}
+			<div class='message_sent'>
+				<pre>{{ message.user_from }}</pre>
+		{% else %}
+			<div class='message_recieved'>
+				<pre>{{ message.user_to }}</pre>
+		{% endif %}
 			<pre>{{ message.time_sent }}</pre>
-			<p>{{ message.text }}</p>
+			<p>{{ message.message }}</p>
 		</div>
 		{% endfor %}
+		<form action='' method='POST'>
+			{{ form.message.label }}
+			{{ form.message(required=true) }}
+			<br>
+			{{ form.submit }}
+		</form>
 	{% else %}
-		{% for user in users %}
+		{% for u in users %}
 		<div>
-			<a href= "{{ url_for('chat', username=user.username) }}">
+			<a href= "{{ url_for('chat', username=u.username, action='chat') }}">
 				<img src="../../resources/placeholder.png" alt="placeholder" width="100" height="100">
-				<pre>{{ user.username }}</pre>
-				<pre>{{ user.message}} {{ user.time_sent }}</pre>
+				<pre>{{ u.username }}</pre>
+				{% if u.messages %}
+					<pre>{{ u.messages.message}}</pre>
+					<pre>{{ u.messages.time_sent }}</pre>
+				{% else %}
+					<pre>Start a conversation</pre>
+				{% endif %}
 			</a>
 		</div>
 		{% endfor %}
