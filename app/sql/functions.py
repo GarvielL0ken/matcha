@@ -174,7 +174,7 @@ def get_matched_users(id_user):
 def get_messages_db(id_user_1, id_user_2):
 	sql = 'SELECT * FROM messages '
 	sql += 'WHERE (id_user_from = %(id_user_1)s AND id_user_to = %(id_user_2)s) '
-	sql += 'OR (id_user_to = %(id_user_2)s AND id_user_from = %(id_user_1)s)	'
+	sql += 'OR (id_user_from = %(id_user_2)s AND id_user_to = %(id_user_1)s)	'
 	data = {
 		'id_user_1' : id_user_1,
 		'id_user_2' : id_user_2

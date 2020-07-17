@@ -4,18 +4,22 @@
 	<h3>{{ title }}</h3>
 	{% if action == 'chat' %}
 		<h2>{{ u.username }}</h2>
-		{% for message in user.messages %}
-		{% if message.user_from %}
-			<div class='message_sent'>
-				<pre>{{ message.user_from }}</pre>
+		{% if user.messages %}
+			{% for message in user.messages %}
+				{% if message.user_from %}
+					<div class='message_sent'>
+						<pre>{{ message.user_from }}</pre>
+				{% else %}
+					<div class='message_recieved'>
+						<pre>{{ message.user_to }}</pre>
+				{% endif %}
+					<pre>{{ message.time_sent }}</pre>
+					<p>{{ message.message }}</p>
+				</div>
+			{% endfor %}
 		{% else %}
-			<div class='message_recieved'>
-				<pre>{{ message.user_to }}</pre>
+			<pre>Any messages you send or recieve will appear here</pre>
 		{% endif %}
-			<pre>{{ message.time_sent }}</pre>
-			<p>{{ message.message }}</p>
-		</div>
-		{% endfor %}
 		<form action='' method='POST'>
 			{{ form.message.label }}
 			{{ form.message(required=true) }}

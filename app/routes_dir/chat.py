@@ -50,10 +50,11 @@ def chat():
 		user.get_messages(u.id_user)
 		user = user.data_to_dict('chat')
 		u = u.data_to_dict('chat')
-		for message in user['messages']:
-			if (message['id_user_from'] == user['id_user']):
-				message['user_from'] = user['username']
-			else:
-				message['user_to'] = u['username']
-			print("Message : " + str(message))
+		if (user['messages']):
+			for message in user['messages']:
+				if (message['id_user_from'] == user['id_user']):
+					message['user_from'] = user['username']
+				else:
+					message['user_to'] = u['username']
+				print("Message : " + str(message))
 		return (render_template('chat.html', title="Chat", user=user, u=u, action=action, form=form))
