@@ -57,10 +57,12 @@ class User():
 		##LUV = (l / v * u) + v
 		##Denominator : (v) => (v + (v == 0)) if v == 0 then v += 1
 
+		print('ID_USER : ' + str(self.id_user))
 		l = get_number(self.id_user, 'likes')
 		u = get_number(self.id_user, 'users', number_of_records=True)
 		v = get_number(self.id_user, 'views')
-
+		
+		print('l : ' + str(l) + ' : u : ' + str(u) + ' : v : ' + str(v))
 		fame_rating = (l / (v + (v == 0))) * u + v
 		self.fame_rating = fame_rating
 

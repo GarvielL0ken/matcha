@@ -210,10 +210,14 @@ def get_messages_db(id_user_1, id_user_2):
 		return (results)
 
 def get_number(id_user, table, number_of_records=False):
+	column : str
+
+	column = table[:-1]
 	sql = 'SELECT COUNT( * ) as "number" FROM ' + table
 	data = {}
 	if (not number_of_records):
-		sql += ' WHERE id_user_1 = %(id_user)s OR id_user_2 = %(id_user)s'
+		sql += ' WHERE (id_user_1 = %(id_user)s AND user_2_' + column +' = 1)'
+		sql += ' OR (id_user_2 = %(id_user)s AND user_1_' + column + ' = 1)'
 		data = {
 			'id_user' : id_user
 		}
@@ -221,9 +225,9 @@ def get_number(id_user, table, number_of_records=False):
 	print(table + " : " + str(results[0]['number']))
 	return (results[0]['number'])
 
-def update_like_status_db(data):
-	sql = 'UPDATE likes '
-	sql += 'SET '
+def update_status_db(table, data):
+	sql = 'UPDATE ' + table
+	sql += ' SET '
 	sql += data_to_column(data, format_codes=True, brackets=False, paired=True)
 	sql += ' WHERE '
 	sql += '(id_user_1 = %(id_user_1)s AND id_user_2 = %(id_user_2)s) '
@@ -251,13 +255,13 @@ def update_status(id_user_1, id_user_2, table, action='add'):
 				return (True)
 			data['user_2_' + column] = status['user_2_' + column]
 		else:
-			if (status['user_2' + column]):
+			if (status['user_2_' + column]):
 				print('ALREADY ' + column)
 				return (True)
 			data['user_2_' + column] = status['user_1_' + column]
 
 		if (action == 'add' or data['user_2_like']):
-			update_like_status_db(data)
+			update_status_db(table, data)
 		elif (action == 'remove'):
 			where = '(id_user_1  = %(id_user_1)s AND id_user_2 = %(id_user_2)s) OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_2)s)'
 			remove_record(table, where, data)

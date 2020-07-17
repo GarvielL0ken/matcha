@@ -18,7 +18,9 @@ def profile():
 
 	action = request.args.get('action')
 	user = User(session['id_user'])
-	user.set_likes()
+	print("SESSION ID USER : " + str(session['id_user']))
+	print('')
+	#user.set_likes()
 	form = 0
 
 	##if (user.data_incomplete):

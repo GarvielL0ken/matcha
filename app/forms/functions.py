@@ -1,4 +1,4 @@
-from app.sql.functions import get_like_status, insert_record, update_like_status_db, remove_record
+from app.sql.functions import get_like_status, insert_record, update_status, remove_record
 
 def calculate_id(arr_elements, arr_options):
 	int_id : int
@@ -36,35 +36,7 @@ def required(a, excluded_fields=[]):
 	return (True)
 
 def add_like(id_user_1, id_user_2):
-	update_like_status(id_user_1, id_user_2, action='add')
+	update_status(id_user_1, id_user_2, 'likes')
 
 def remove_like(id_user_1, id_user_2):
-	update_like_status(id_user_1, id_user_2, 'remove')
-
-def update_like_status(id_user_1, id_user_2, action='add'):
-	data = {
-		'id_user_1' : id_user_1,
-		'id_user_2' : id_user_2,
-		'user_1_like' : True,
-		'user_2_like' : False
-	}
-	if (action == 'remove'):
-		data['user_1_like'] = False
-
-	like_status = get_like_status(id_user_1, id_user_2)
-	if (like_status):
-		if (id_user_1 == like_status['id_user_1']):
-			data['user_2_like'] = like_status['user_2_like']
-		else:
-			data['user_2_like'] = like_status['user_1_like']
-
-		if (action == 'add' or data['user_2_like']):
-			update_like_status_db(data)
-		elif (action == 'remove'):
-			where = '(id_user_1  = %(id_user_1)s AND id_user_2 = %(id_user_2)s) OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_2)s)'
-			remove_record('likes', where, data)
-
-	else:
-		if (action == 'add'):
-			insert_record('likes', data)
-	return (True)
+	update_status(id_user_1, id_user_2, 'likes', action='remove')
