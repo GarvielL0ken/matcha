@@ -5,7 +5,7 @@ from datetime import date, datetime
 ##Third Party
 
 ##Local
-from app.sql.functions import get_results, get_like_status, get_messages_db
+from app.sql.functions import get_results, get_like_status, get_messages_db, get_number
 from app.forms.functions import required
 
 class User():
@@ -32,6 +32,8 @@ class User():
 			setattr(self, column_name, user[column_name])
 
 		self.calculate_age()
+		self.calculate_fame_rating()
+		self.get_views()
 
 	def calculate_age(self):
 		dob = self.dob
@@ -40,6 +42,26 @@ class User():
 
 		self.age = age
 		return (True)
+
+	def calculate_fame_rating(self):
+		##Calculate how popular a user is based on the following factors
+		l : int	#Number of likes
+		u : int	#Number of users
+		v : int #Number of views
+
+		##fame rating = LUV
+		##LUV = acceptance rate + surface appeal
+		##   like to view ratio + views
+		##acceptance rate needs to scale with the number of users:
+		##LUV = (l / v * u) + v
+		##Denominator : (v) => (v + (v == 0)) if v == 0 then v += 1
+
+		l = get_number(self.id_user, 'likes')
+		u = get_number(self.id_user, 'users', number_of_records=True)
+		v = get_number(self.id_user, 'views')
+
+		fame_rating = (l / (v + (v == 0))) * u + v
+		self.fame_rating = fame_rating
 
 	def determine_like_status(self, id_user):
 		print("Detemine Like Status")
@@ -78,6 +100,10 @@ class User():
 			return (messages)
 		else:
 			self.messages = messages
+
+	def get_views():
+		self.viewed_users = 0
+		self.viewed_by = 0
 
 	def data_to_dict(self, method):
 

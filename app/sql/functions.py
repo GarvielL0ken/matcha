@@ -185,6 +185,18 @@ def get_messages_db(id_user_1, id_user_2):
 	else:
 		return (results)
 
+def get_number(id_user, table, number_of_records=False):
+	sql = 'SELECT COUNT( * ) as "number" FROM ' + table
+	data = {}
+	if (not number_of_records):
+		sql += ' WHERE id_user_1 = %(id_user)s OR id_user_2 = %(id_user)s'
+		data = {
+			'id_user' : id_user
+		}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	print(table + " : " + str(results[0]['number']))
+	return (results[0]['number'])
+
 def update_like_status_db(data):
 	sql = 'UPDATE likes '
 	sql += 'SET '

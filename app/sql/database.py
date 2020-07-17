@@ -62,3 +62,11 @@ TABLES['messages'] = (
 	"  `time_sent`		DATETIME		NOT NULL,"
 	"  PRIMARY KEY (`id_message`)"
 	") ENGINE=InnoDB")
+TABLES['views'] = (
+	"CREATE TABLE IF NOT EXISTS `views` ("
+	"  `id_user_1`		INT				NOT NULL,"
+	"  `id_user_2`		INT				NOT NULL,"
+	"  `user_1_viewed`	BOOLEAN			NOT NULL,"
+	"  `user_2_viewed`	BOOLEAN			NOT NULL"
+	") ENGINE=InnoDB"
+)
