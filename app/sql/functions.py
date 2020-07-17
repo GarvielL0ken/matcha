@@ -159,6 +159,23 @@ def get_like_status(id_user_1, id_user_2):
 	else:
 		return (False)
 
+def get_status(id_user_1, id_user_2, table):
+	sql = 'SELECT * ' 
+	sql += 'FROM ' + table
+	sql += ' WHERE '
+	sql += '(id_user_1 = %(id_user_1)s AND id_user_2 = %(id_user_2)s) '
+	sql += 'OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_1)s)'
+	data = {
+		'id_user_1' : id_user_1,
+		'id_user_2' : id_user_2
+	}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	if (results):
+		result = results[0]
+		return (result)
+	else:
+		return (False)
+
 def get_matched_users(id_user):
 	sql = 'SELECT * FROM `likes` '
 	sql += 'WHERE (id_user_1 = %(id_user)s OR id_user_2 = %(id_user)s) '
@@ -212,6 +229,43 @@ def update_like_status_db(data):
 	sql += '(id_user_1 = %(id_user_1)s AND id_user_2 = %(id_user_2)s) '
 	sql += 'OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_1)s)'
 	execute_sql(sql, data)
+
+def update_status(id_user_1, id_user_2, table, action='add'):
+	column : str
+
+	column = table[:-1]
+	data = {
+		'id_user_1' : id_user_1,
+		'id_user_2' : id_user_2,
+		'user_1_' + column : True,
+		'user_2_' + column: False
+	}
+	if (action == 'remove'):
+		data['user_1_' + column] = False
+
+	status = get_status(id_user_1, id_user_2, table)
+	if (status):
+		if (id_user_1 == status['id_user_1']):
+			if (status['user_1_' + column]):
+				print('ALREADY ' + column)
+				return (True)
+			data['user_2_' + column] = status['user_2_' + column]
+		else:
+			if (status['user_2' + column]):
+				print('ALREADY ' + column)
+				return (True)
+			data['user_2_' + column] = status['user_1_' + column]
+
+		if (action == 'add' or data['user_2_like']):
+			update_like_status_db(data)
+		elif (action == 'remove'):
+			where = '(id_user_1  = %(id_user_1)s AND id_user_2 = %(id_user_2)s) OR (id_user_1 = %(id_user_2)s AND id_user_2 = %(id_user_2)s)'
+			remove_record(table, where, data)
+
+	else:
+		if (action == 'add'):
+			insert_record(table, data)
+	return (True)
 
 def remove_record(table, where, data):
 	sql = 'DELETE FROM ' + table

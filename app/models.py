@@ -5,7 +5,7 @@ from datetime import date, datetime
 ##Third Party
 
 ##Local
-from app.sql.functions import get_results, get_like_status, get_messages_db, get_number
+from app.sql.functions import get_results, get_like_status, get_messages_db, get_number, update_status
 from app.forms.functions import required
 
 class User():
@@ -131,6 +131,10 @@ class User():
 		
 	def set_likes(self):
 		self.liked_by = self.set_attribute('likes')
+
+	def view_user(self, id_user):
+		update_status(self.id_user, id_user, 'views')
+		return (True)
 
 	def data_to_dict(self, method):
 

@@ -18,6 +18,7 @@ def user(username):
 		return redirect(url_for('login'))
 
 	u = User(username=username)
+	user.view_user(u.id_user)
 	
 	form = User_Actions_Form()
 	form.check(user, u)
