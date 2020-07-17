@@ -8,7 +8,7 @@ from wtforms import StringField, RadioField, TextAreaField, FileField, SubmitFie
 ##Local
 from app.forms.fields import MultiCheckboxField
 from app.forms.functions import calculate_id, is_in_array, required
-from app.sql.functions import update_record
+from app.sql.functions import update_record, add_tags, remove_tags
 
 class Edit_Profile_Form(FlaskForm):
 	first_name = StringField('First name')
@@ -35,14 +35,14 @@ class Edit_Profile_Form(FlaskForm):
 
 		excluded_fields = ['pict_0', 'pict_1', 'pict_2', 'pict_3', 'pict_4', 'user_data', 'tag_data', 'location']
 		altered_fields = ['preferences']
-		preferences = ['male', 'female']
+		preferences = ['Male', 'Female']
 
 		if (request.method != 'POST'):
 			return (False)
 
 		for a in vars(self):
 			if (required(a, excluded_fields)):
-				print(a)
+				print('CHECK : ' + str(a))
 				if (vars(self)[a].data == ''):
 					return (False)
 				else:
@@ -50,7 +50,9 @@ class Edit_Profile_Form(FlaskForm):
 					if (is_in_array(a, altered_fields)):
 						altered_data = vars(self)[a].data
 					if (a == 'preferences'):
+						print('CALCULATE ID')
 						altered_data = calculate_id(altered_data, preferences)
+						print('id = ' + str(altered_data))
 					if (altered_data):
 						print("altered_data : " + str(altered_data))
 						user_data[a] = altered_data
@@ -65,6 +67,8 @@ class Edit_Profile_Form(FlaskForm):
 		return (True)
 
 	def update_user_data(self, request, user):
+		bool_add : bool
+
 		##Update the user data in database
 		where = {
 			'id_user' : session['id_user']
@@ -72,14 +76,27 @@ class Edit_Profile_Form(FlaskForm):
 		data = {}
 		for field_name in self.user_data:
 			print("Field : " + field_name)
-			try:
-				if (self.user_data[field_name] != vars(user)[field_name]):
-					data[field_name] = self.user_data[field_name]
-			except:
+			if (self.user_data[field_name] != vars(user)[field_name]):
 				data[field_name] = self.user_data[field_name]
 
-		print("Update user : " + str(self.user_data))
-		update_record('users', self.user_data, where)
+		print("Update user : " + str(data))
+		update_record('users', data, where)
+		print("tag_data : " + str(self.tag_data))
+		tags_add = []
+		tags_remove = []
+		for form_tag in self.tag_data:
+			print('FORM_TAG : ' + str(form_tag))
+			bool_add = True
+			for user_tag in user.tags:
+				bool_add = False
+				print('USER_TAG : ' + user_tag)
+			
+			if (bool_add):
+				tags_add.append(form_tag)
+		print('ADD TAGS : ' + str(tags_add))
+		print('REMOVE TAGS' + str(tags_remove))
+		add_tags(user.id_user, tags_add)
+		remove_tags(user.id_user, tags_remove)
 		##Remove old user images if they are overwritten
 		##Add user images to the server
 		return (True)

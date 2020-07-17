@@ -5,7 +5,7 @@ from datetime import date, datetime
 ##Third Party
 
 ##Local
-from app.sql.functions import get_results, get_like_status, get_messages_db, get_number, update_status
+from app.sql.functions import get_results, get_like_status, get_messages_db, get_number, update_status, get_tags_db
 from app.forms.functions import required
 
 class User():
@@ -23,6 +23,7 @@ class User():
 			'column' : column,
 			'value' : value
 		}
+		print('GET USER FROM DATABASE')
 		results = get_results('users', {}, where, all=True)
 		user = results[0]
 		#print(user)
@@ -31,8 +32,12 @@ class User():
 			#print(user[column_name])
 			setattr(self, column_name, user[column_name])
 
-		self.calculate_age()
+		if (self.dob):
+			print('CALCULATE AGE')
+			self.calculate_age()
+		print('CALCULATE FAME RATING')
 		self.calculate_fame_rating()
+		self.get_tags()
 		#self.set_views()
 		#self.set_likes()
 
@@ -104,6 +109,19 @@ class User():
 		else:
 			self.messages = messages
 
+	def get_tags(self):
+		tag_str : str
+
+		tag_str = ''
+		results = get_tags_db(self.id_user)
+		print('GET_TAGS_DB RESULT : ' + str(results))
+		if (results):
+			for result in results:
+				tag_str += '#' + result['text']
+		print('TAG_STR : ' + str(tag_str))
+		self.tags = results
+		self.tag_str = tag_str
+
 	def set_attribute(self, table):
 		column : str
 		
@@ -129,10 +147,14 @@ class User():
 		return (arr_by)
 
 	def set_views(self):
+		print('SET VIEWS')
 		self.viewed_by = self.set_attribute('views')
+		print('')
 		
 	def set_likes(self):
+		print('SET LIKES')
 		self.liked_by = self.set_attribute('likes')
+		print('')
 
 	def view_user(self, id_user):
 		update_status(self.id_user, id_user, 'views')
@@ -214,6 +236,8 @@ class User():
 
 	def preferences_int_to_array(self):
 		arr_preferences = []
+		if (not self.preferences):
+			return (arr_preferences)
 		print("Pref to array : preference : " + str(self.preferences))
 		print(self.preferences % 2)
 		print((self.preferences >> 1) % 2)

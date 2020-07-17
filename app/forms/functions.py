@@ -6,6 +6,8 @@ def calculate_id(arr_elements, arr_options):
 
 	int_id = 0
 	int_order = 1
+	print(arr_elements)
+	print(arr_options)
 	for option in arr_options:
 		for element in arr_elements:
 			if (element == option):

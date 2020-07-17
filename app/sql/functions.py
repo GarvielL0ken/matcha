@@ -225,6 +225,88 @@ def get_number(id_user, table, number_of_records=False):
 	print(table + " : " + str(results[0]['number']))
 	return (results[0]['number'])
 
+def get_tags_db(id_user):
+	sql = 'SELECT * FROM tags'
+	sql += ' INNER JOIN tag_map ON tags.id_tag = tag_map.id_tag'
+	sql += ' WHERE tag_map.id_user = %(id_user)s'
+	data = {
+		'id_user' : id_user
+	}
+	results = execute_sql(sql, data, query=True, dictionary=True)
+	return (results)
+
+def get_existing_tags(arr_tags):
+	i : int
+
+	#Get existing tags
+	sql = 'SELECT * FROM tags WHERE'
+	data = {}
+	i = 0
+	for tag in arr_tags:
+		print('TAG : ' + str(tag))
+		if (i):
+			sql += ' OR'
+		sql += ' text = %(' + str(i) + ')s'
+		data[str(i)] = tag
+		i += 1
+	
+	print('ADD_TAG_SQL GET_EXISTING_TAGS: ' + sql)
+	print('DATA : ' + str(data))
+	existing_tags = execute_sql(sql, data, query=True, dictionary=True)
+	return (existing_tags)
+
+def add_tags(id_user, arr_tags):
+	new : bool
+	i : int
+
+	existing_tags = get_existing_tags(arr_tags)
+	print('EXISTING TAGS : ' + str(existing_tags))
+
+	#Add tags that dont yet exist
+	new_tags = []
+	for tag in arr_tags:
+		new = True
+		for existing_tag in existing_tags:
+			if (tag == existing_tag['text']):
+				new = False
+				break
+		if (new):
+			new_tags.append(tag)
+
+	print('NEW_TAGS : ' + str(new_tags))
+	if (new_tags):
+		sql = 'INSERT INTO tags (text) VALUES '
+		data = {}
+		i = 0
+		for tag in new_tags:
+			if (i):
+				sql += ', '
+			sql += '(%(' + str(i) + ')s)'
+			data[str(i)] = tag
+			i += 1
+
+		print('ADD_TAG_SQL INSERT_NEW_TAGS: ' + sql)
+		print('DATA : ' + str(data))
+		execute_sql(sql, data)
+
+		existing_tags = get_existing_tags(arr_tags)
+	#print('EXISTING TAGS : ' + str(existing_tags))
+	
+
+	#Insert user_id and tag_id into tag_map
+	for tag in arr_tags:
+		for existing_tag in existing_tags:
+			if (tag == existing_tag['text']):
+				data = {
+					'id_tag' : existing_tag['id_tag'],
+					'id_user' : id_user
+				}
+				insert_record('tag_map', data)
+				break
+
+def remove_tags(id_user, arr_tags):
+	return (True)
+
 def update_status_db(table, data):
 	sql = 'UPDATE ' + table
 	sql += ' SET '

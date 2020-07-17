@@ -18,7 +18,11 @@
 			{{ form.email(required=true, value=user.email) }}
 			<br>
 			{{ form.dob.label }}
-			{{ form.dob(required=true, value=user.dob) }}
+			{% if user.dob %}
+				{{ form.dob(required=true, value=user.dob)}}
+			{% else %}
+				{{ form.dob(required=true) }}
+			{% endif %}
 			<br>
 			{{ form.gender.label }}
 			{{ form.gender(required=true) }}
@@ -52,7 +56,7 @@
 		<h2>{{ user.first_name }} {{ user.last_name }}</h2>
 		<h3>Age: {{ user.age }}</h3>
 		<h3>Gender: {{ user.gender }}</h3>
-		<h3>Fame Rating: {{ user.fame_rating }}</h3>
+		<h3>LUV: {{ user.fame_rating }}</h3>
 		<h3>Preference For: </h3>
 		<ul>
 			{% for preference in user.preferences %}
@@ -60,7 +64,7 @@
 			{% endfor %}
 		</ul>
 		<p> {{ user.bio }}</p>
-		<p> {{ user.tags }}</p>
+		<p> {{ user.tag_str }}</p>
 		<pre>Your Profile Pictures:</pre>
 		<div class= "image_slider_container">
 			{% for image in user.profile_pictures %}
@@ -80,10 +84,11 @@
 		</div>
 		<pre>Users who viewed you:</pre>
 		<div class= "image_slider_container">
-			{% for user in user.viewed_by %}
+			{% for u in user.viewed_by %}
 				<div class= "slide">
 					<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
 				</div>
+				<pre>{{ u.username }}</pre>
 			{% endfor %}
 		</div>
 		<pre> {{ user.email }}</pre>
