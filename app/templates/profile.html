@@ -71,9 +71,10 @@
 		</div>
 		<pre>Users who liked you:</pre>
 		<div class= "image_slider_container">
-			{% for user in user.liked_by %}
+			{% for u in user.liked_by %}
 				<div class= "slide">
 					<img src="../../resources/chat.png" alt="placeholder" width="100" height="100">
+					<pre>{{ u.username }}</pre>
 				</div>
 			{% endfor %}
 		</div>

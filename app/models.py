@@ -33,7 +33,8 @@ class User():
 
 		self.calculate_age()
 		self.calculate_fame_rating()
-		self.get_views()
+		#self.set_views()
+		#self.set_likes()
 
 	def calculate_age(self):
 		dob = self.dob
@@ -69,7 +70,7 @@ class User():
 		print('Like Status : ' + str(like_status))
 
 		if (not like_status):
-			print("Record Does not exists")
+			print("Record Does not exist")
 			self.like_status = [0, '']
 			return (True)
 
@@ -101,9 +102,35 @@ class User():
 		else:
 			self.messages = messages
 
-	def get_views():
-		self.viewed_users = 0
-		self.viewed_by = 0
+	def set_attribute(self, table):
+		column : str
+		
+		attribute = table[:-1]
+		where = {
+			'id_user_1' : 'id_user',
+			'_C0' : 'OR',
+			'id_user_2' : 'id_user',
+		}
+		data = {
+			'id_user' : self.id_user
+		}
+		results = get_results(table, data, where=where, all=True, compound_condition=True)
+
+		arr_by = []
+		for record in results:
+			column = 'user_2'
+			if (self.id_user != record['id_user_1']):
+				column = 'user_1'
+			if (record[column + '_' + attribute]):
+				arr_by.append(User(record['id_' + column]))
+		
+		return (arr_by)
+
+	def set_views(self):
+		self.viewed_by = self.set_attribute('views')
+		
+	def set_likes(self):
+		self.liked_by = self.set_attribute('likes')
 
 	def data_to_dict(self, method):
 

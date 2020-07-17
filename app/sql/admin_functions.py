@@ -36,3 +36,4 @@ def drop_table(table):
 #drop_table('tags')
 #drop_table('tag_map')
 #drop_table('messages')
+#drop_table('views')

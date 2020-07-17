@@ -81,7 +81,7 @@ def insert_verification_hash(id_user):
 def insert_new_password_hash(id_user):
 	insert_hash('reset_password', id_user)
 
-def get_results(table, data={}, where={}, all=False, order_by={}):
+def get_results(table, data={}, where={}, all=False, order_by={}, compound_condition=False):
 	sql = "SELECT "
 	if (all):
 		sql += "*"
@@ -90,8 +90,15 @@ def get_results(table, data={}, where={}, all=False, order_by={}):
 	sql += " FROM " + table
 	if (where):
 		sql += " WHERE "
-		sql += where['column'] + " = %(value)s"
-		data['value'] = where['value']
+		if (compound_condition):
+			for column_name in where:
+				if (column_name[0] != '_'):
+					sql += column_name + ' = %(' + str(where[column_name]) + ')s'
+				else:
+					sql += ' ' + where[column_name] + ' '
+		else:
+			sql += where['column'] + " = %(value)s"
+			data['value'] = where['value']
 	if (order_by):
 		sql += " ORDER BY "
 		sql += order_by['column'] + " " + order_by['order']
